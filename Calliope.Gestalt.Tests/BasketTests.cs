@@ -10,28 +10,26 @@ namespace Calliope.Gestalt.Tests
 	public class BasketTests
 	{
 		[Test]
-		public void CreateBasket_creates_a_basket()
+		public void CreateBasket_creates_a_basket_which_can_be_retrieved()
 		{
-			var webRequest = WebRequest.Create("http://localhost/calliope/baskets/") as HttpWebRequest;
-			Assert.That(webRequest != null, "webRequest != null");
-			webRequest.Method = "POST";
-			webRequest.Accept = "application/json";
-			var requestStream = webRequest.GetRequestStream();
-			var streamWriter = new StreamWriter(requestStream);
-			streamWriter.Write("");
+			var postBasketRequest = WebRequest.Create("http://localhost/calliope/baskets/") as HttpWebRequest;
+			Assert.That(postBasketRequest != null, "webRequest != null");
+			postBasketRequest.Method = "POST";
+			postBasketRequest.Accept = "application/json";
+			new StreamWriter(postBasketRequest.GetRequestStream()).Write("");
 
-			HttpWebResponse webResponse;
+			HttpWebResponse postBasketResponse;
 			try
 			{
-				webResponse = webRequest.GetResponse() as HttpWebResponse;
+				postBasketResponse = postBasketRequest.GetResponse() as HttpWebResponse;
 			}
 			catch (WebException ex)
 			{
-				webResponse = ex.Response as HttpWebResponse;
+				postBasketResponse = ex.Response as HttpWebResponse;
 			}
-			Assert.That(webResponse != null, "webResponse != null");
+			Assert.That(postBasketResponse != null, "webResponse != null");
 
-			var responseStream = webResponse.GetResponseStream();
+			var responseStream = postBasketResponse.GetResponseStream();
 			Assert.That(responseStream != null, "responseStream != null");
 
 			var streamReader = new StreamReader(responseStream);
@@ -40,6 +38,9 @@ namespace Calliope.Gestalt.Tests
 
 			var basket = new JavaScriptSerializer().Deserialize<Basket>(responseBody);
 			Assert.That(basket != null, "basket != null");
+
+			var basketUrl = postBasketResponse.Headers["Location"];
+			Assert.That(basketUrl != null, "basketUrl != null");
 		}
 	}
 

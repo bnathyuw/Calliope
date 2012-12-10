@@ -8,8 +8,10 @@ namespace Calliope.Basket.Feature.Tests
 	[TestFixture]
 	public class BasketModuleTests
 	{
-		[Test]
-		public void Post_basket_returns_basket()
+		private BrowserResponse _browserResponse;
+
+		[SetUp]
+		public void SetUp()
 		{
 			Console.WriteLine("Testing {0}", typeof (BasketModule));
 			var browser = new Browser(new DefaultNancyBootstrapper());
@@ -19,8 +21,20 @@ namespace Calliope.Basket.Feature.Tests
 					                                        with.Accept("application/json");
 				                                        });
 			Assert.That(browserResponse != null, "browserResponse != null");
-			var basket = browserResponse.Body.DeserializeJson<Basket>();
+			_browserResponse = browserResponse;
+		}
+
+		[Test]
+		public void Post_basket_returns_basket()
+		{
+			var basket = _browserResponse.Body.DeserializeJson<Basket>();
 			Assert.That(basket != null, "basket != null");
+		}
+
+		[Test]
+		public void Post_basket_gives_location()
+		{
+			Assert.That(_browserResponse.Headers["Location"] != null, "Location != null");
 		}
 	}
 	public class Basket
