@@ -6,7 +6,7 @@ using Nancy.Testing;
 namespace Calliope.Basket.Feature.Tests
 {
 	[TestFixture]
-	public class BasketModuleTests
+	public class PostBasketTests
 	{
 		private BrowserResponse _browserResponse;
 
@@ -25,14 +25,14 @@ namespace Calliope.Basket.Feature.Tests
 		}
 
 		[Test]
-		public void Post_basket_returns_basket()
+		public void Basket_is_returned_in_body()
 		{
 			var basket = _browserResponse.Body.DeserializeJson<Basket>();
 			Assert.That(basket != null, "basket != null");
 		}
 
 		[Test]
-		public void Post_basket_gives_location()
+		public void Location_is_returned_in_header()
 		{
 			Assert.That(_browserResponse.Headers["Location"] != null, "Location != null");
 		}

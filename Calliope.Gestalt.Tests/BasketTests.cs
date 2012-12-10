@@ -29,18 +29,45 @@ namespace Calliope.Gestalt.Tests
 			}
 			Assert.That(postBasketResponse != null, "webResponse != null");
 
-			var responseStream = postBasketResponse.GetResponseStream();
-			Assert.That(responseStream != null, "responseStream != null");
+			var postResponseStream = postBasketResponse.GetResponseStream();
+			Assert.That(postResponseStream != null, "responseStream != null");
 
-			var streamReader = new StreamReader(responseStream);
-			var responseBody = streamReader.ReadToEnd();
-			Console.WriteLine(responseBody);
+			var postResponseStreamReader = new StreamReader(postResponseStream);
+			var postResponseBody = postResponseStreamReader.ReadToEnd();
+			Console.WriteLine(postResponseBody);
 
-			var basket = new JavaScriptSerializer().Deserialize<Basket>(responseBody);
-			Assert.That(basket != null, "basket != null");
+			var postBasket = new JavaScriptSerializer().Deserialize<Basket>(postResponseBody);
+			Assert.That(postBasket != null, "basket != null");
 
 			var basketUrl = postBasketResponse.Headers["Location"];
 			Assert.That(basketUrl, Is.EqualTo("/baskets/1"));
+
+			var getBasketRequest = WebRequest.Create("http://localhost/calliope" + basketUrl) as HttpWebRequest;
+			Assert.That(getBasketRequest != null, "getBasketReqeust != null");
+			getBasketRequest.Method = "GET";
+			getBasketRequest.Accept = "application/json";
+
+			HttpWebResponse getBasketResponse;
+			try
+			{
+				getBasketResponse = getBasketRequest.GetResponse() as HttpWebResponse;
+			}
+			catch (WebException ex)
+			{
+				getBasketResponse = ex.Response as HttpWebResponse;
+			}
+			Assert.That(getBasketResponse != null, "getBasketResponse != null");
+
+			var getResponseStream = getBasketResponse.GetResponseStream();
+			Assert.That(getResponseStream != null, "responseStream != null");
+
+			var getResponseStreamReader = new StreamReader(getResponseStream);
+			var getResponseBody = getResponseStreamReader.ReadToEnd();
+			Console.WriteLine(getResponseBody);
+
+			var getBasket = new JavaScriptSerializer().Deserialize<Basket>(getResponseBody);
+			Assert.That(getBasket != null, "basket != null");
+
 		}
 	}
 
