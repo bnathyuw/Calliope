@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Nancy;
 
 namespace Calliope.Basket
@@ -28,8 +29,9 @@ namespace Calliope.Basket
 		private static Basket RetrieveBasket(int basketId)
 		{
 			var basket = BasketStore.Find(basketId);
-			var items = ItemStore.FindForBasket(basketId);
+			var items = ItemStore.FindForBasket(basketId).ToList();
 			basket.Items = items;
+			basket.Total = items.Sum(i => i.Price);
 			return basket;
 		}
 

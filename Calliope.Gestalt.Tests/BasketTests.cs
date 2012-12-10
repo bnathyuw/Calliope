@@ -59,6 +59,7 @@ namespace Calliope.Gestalt.Tests
 
 			var gotBasket = getBasketResponse.Deserialize<Basket>();
 			Assert.That(gotBasket != null, "basket != null");
+			Assert.That(gotBasket.Total, Is.EqualTo(5), "basket.Total");
 
 			Assert.That(gotBasket.Items.Length, Is.EqualTo(1), "basket.Items.Length");
 			var item = gotBasket.Items[0];
@@ -68,14 +69,5 @@ namespace Calliope.Gestalt.Tests
 			Assert.That(item.FirstLine, Is.EqualTo("Ille mi par esse deo uidetur"), "item.FirstLine");
 			Assert.That(item.Price, Is.EqualTo(5), "item.Price");
 		}
-	}
-
-	public class Item
-	{
-		public int Id { get; set; }
-		public string Title { get; set; }
-		public string Poet { get; set; }
-		public string FirstLine { get; set; }
-		public int Price { get; set; }
 	}
 }
