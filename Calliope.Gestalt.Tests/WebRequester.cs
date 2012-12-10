@@ -20,14 +20,11 @@ namespace Calliope.Gestalt.Tests
 				WriteBody(body, request);
 			}
 			
-			Console.WriteLine();
-			
 			var response = GetResponse(request);
 			
 			var responseBody = GetResponseBody(response);
 
-			Console.WriteLine("RESPONSE {0:o}\n=====\nHTTP/1.1 {1} {2}\n{3}\n{4}", DateTime.Now, (int) response.StatusCode, response.StatusCode, response.Headers, responseBody);
-			Console.WriteLine();
+			Console.WriteLine("\nRESPONSE {0:o}\n=====\nHTTP/1.1 {1} {2}\n{3}\n{4}\n", DateTime.Now, (int) response.StatusCode, response.StatusCode, response.Headers, responseBody);
 			
 			var responseEntity = GetResponseEntity<T>(responseBody);
 			
@@ -40,16 +37,15 @@ namespace Calliope.Gestalt.Tests
 			return responseEntity;
 		}
 
-		private static string GetResponseBody(HttpWebResponse response)
+		private static string GetResponseBody(WebResponse response)
 		{
 			var responseStream = response.GetResponseStream();
 			Assert.That(responseStream != null, "responseStream != null");
 			var streamReader = new StreamReader(responseStream);
-			var responseBody = streamReader.ReadToEnd();
-			return responseBody;
+			return streamReader.ReadToEnd();
 		}
 
-		private static HttpWebResponse GetResponse(HttpWebRequest request)
+		private static HttpWebResponse GetResponse(WebRequest request)
 		{
 			HttpWebResponse response;
 			try
@@ -73,7 +69,7 @@ namespace Calliope.Gestalt.Tests
 			return request;
 		}
 
-		private static void WriteBody(object body, HttpWebRequest request)
+		private static void WriteBody<T>(T body, WebRequest request)
 		{
 			var bodyString = new JavaScriptSerializer().Serialize(body);
 			var bodyBytes = Encoding.UTF8.GetBytes(bodyString);
