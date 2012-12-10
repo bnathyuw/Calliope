@@ -61,12 +61,21 @@ namespace Calliope.Gestalt.Tests
 			Assert.That(gotBasket != null, "basket != null");
 
 			Assert.That(gotBasket.Items.Length, Is.EqualTo(1), "basket.Items.Length");
-			Assert.That(gotBasket.Items.First().Id, Is.EqualTo(itemId), "basket.Items[0].Id");
+			var item = gotBasket.Items[0];
+			Assert.That(item.Id, Is.EqualTo(itemId), "item.Id");
+			Assert.That(item.Title, Is.EqualTo("51"), "item.Title");
+			Assert.That(item.Poet, Is.EqualTo("Gaius Valerius Catullus"), "item.Poet");
+			Assert.That(item.FirstLine, Is.EqualTo("Ille mi par esse deo uidetur"), "item.FirstLine");
+			Assert.That(item.Price, Is.EqualTo(5), "item.Price");
 		}
 	}
 
 	public class Item
 	{
 		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Poet { get; set; }
+		public string FirstLine { get; set; }
+		public int Price { get; set; }
 	}
 }

@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CF66164C-A850-44EB-A16A-B0A15AA8257F}</ProjectGuid>
+    <ProjectGuid>{96C90EA3-F7CC-4F1E-9827-0081381C6B16}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Calliope.Basket</RootNamespace>
-    <AssemblyName>Calliope.Basket</AssemblyName>
+    <RootNamespace>Calliope.Catalogue</RootNamespace>
+    <AssemblyName>Calliope.Catalogue</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
@@ -38,9 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.13.0\lib\net40\Nancy.dll</HintPath>
@@ -69,14 +66,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Basket.cs" />
-    <Compile Include="BasketModule.cs" />
-    <Compile Include="BasketStore.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="ItemModule.cs" />
-    <Compile Include="ItemStore.cs" />
-    <Compile Include="Poem.cs" />
-    <Compile Include="PoemServiceWrapper.cs" />
+    <Compile Include="PoemModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +91,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49845</DevelopmentServerPort>
+          <DevelopmentServerPort>50494</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/calliope/baskets</IISUrl>
+          <IISUrl>http://localhost/calliope/poems</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
