@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basket.cs" />
+    <Compile Include="Given_an_empty_basket\When_various_items_are_added.cs" />
     <Compile Include="Poem.cs" />
     <Compile Include="Given_an_empty_basket\When_an_item_is_added.cs" />
     <Compile Include="Given_an_empty_basket\When_another_basket_is_created.cs" />
