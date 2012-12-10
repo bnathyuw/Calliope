@@ -1,0 +1,11 @@
+bin
+obj
+logs
+packages
+_ReSharper*
+_NCrunch_*
+*.user
+*.suo
+*.cache
+*.docstates
+*.ncrunch*
