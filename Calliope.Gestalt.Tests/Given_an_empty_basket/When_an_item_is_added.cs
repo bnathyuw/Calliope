@@ -21,34 +21,52 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 
 			_basketUrl = postBasketResponse["Location"];
 
-			_response = WebRequester.DoRequest(BasketRoot + _basketUrl + "/items/", "POST", new Item { Id = ItemId });
+			_response = WebRequester.DoRequest(BasketRoot + _basketUrl + "/items/", "POST", new Item {Id = ItemId});
 
 			_item = _response.Body;
 			_itemLocation = _response["Location"];
-
-			Assert.That(_item.Id, Is.EqualTo(ItemId), "itemId");
 		}
 
 		[Test]
 		public void Then_the_response_code_is_created()
 		{
-			Assert.That(_response.StatusCode, Is.EqualTo(HttpStatusCode.Created), "response.StatusCode");
+			Assert.That(_response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 		}
 
 		[Test]
 		public void Then_its_location_is_correct()
 		{
-			Assert.That(_itemLocation, Is.EqualTo(_basketUrl + "/items/" + ItemId), "itemLocation");
+			Assert.That(_itemLocation, Is.EqualTo(_basketUrl + "/items/" + ItemId));
 		}
 
 		[Test]
-		public void Then_the_item_shows_the_details_of_the_poem_selected()
+		public void Then_the_item_shows_the_correct_id()
 		{
-			Assert.That(_item.Id, Is.EqualTo(ItemId), "item.Id");
-			Assert.That(_item.Title, Is.EqualTo("51"), "item.Title");
-			Assert.That(_item.Poet, Is.EqualTo("Gaius Valerius Catullus"), "item.Poet");
-			Assert.That(_item.FirstLine, Is.EqualTo("Ille mi par esse deo uidetur"), "item.FirstLine");
-			Assert.That(_item.Price, Is.EqualTo(5), "item.Price");
+			Assert.That(_item.Id, Is.EqualTo(ItemId));
+		}
+
+		[Test]
+		public void Then_the_item_shows_the_correct_title()
+		{
+			Assert.That(_item.Title, Is.EqualTo("51"));
+		}
+
+		[Test]
+		public void Then_the_item_shows_the_correct_poet()
+		{
+			Assert.That(_item.Poet, Is.EqualTo("Gaius Valerius Catullus"));
+		}
+
+		[Test]
+		public void Then_the_item_shows_the_correct_first_line()
+		{
+			Assert.That(_item.FirstLine, Is.EqualTo("Ille mi par esse deo uidetur"));
+		}
+
+		[Test]
+		public void Then_the_item_shows_the_correct_price()
+		{
+			Assert.That(_item.Price, Is.EqualTo(5));
 		}
 	}
 }

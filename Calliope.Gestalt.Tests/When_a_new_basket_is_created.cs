@@ -25,7 +25,7 @@ namespace Calliope.Gestalt.Tests
 		[Test]
 		public void Then_the_response_code_is_created()
 		{
-			Assert.That(_response.StatusCode, Is.EqualTo(HttpStatusCode.Created), "response.StatusCode");
+			Assert.That(_response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 		}
 
 		[Test]
@@ -37,7 +37,7 @@ namespace Calliope.Gestalt.Tests
 		[Test]
 		public void Then_its_total_is_0()
 		{
-			Assert.That(_basket.Total, Is.EqualTo(0), "basket.Total");
+			Assert.That(_basket.Total, Is.EqualTo(0));
 		}
 	}
 }

@@ -26,13 +26,13 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		[Test]
 		public void Then_the_response_code_is_ok()
 		{
-			Assert.That(_response.StatusCode, Is.EqualTo(HttpStatusCode.OK), "response.StatusCode");
+			Assert.That(_response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 		}
 
 		[Test]
 		public void Then_its_total_is_0()
 		{
-			Assert.That(_basket.Total, Is.EqualTo(0), "basket.Total");
+			Assert.That(_basket.Total, Is.EqualTo(0));
 		}
 	}
 }

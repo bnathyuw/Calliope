@@ -27,13 +27,13 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		[Test]
 		public void Then_they_have_different_ids()
 		{
-			Assert.That(_secondBasket.Id, Is.Not.EqualTo(_firstBasket.Id), "basket.Id");
+			Assert.That(_secondBasket.Id, Is.Not.EqualTo(_firstBasket.Id));
 		}
 
 		[Test]
 		public void Then_they_have_different_urls()
 		{
-			Assert.That(_secondBasketUrl, Is.Not.EqualTo(_firstBasketUrl), "basketUrl");
+			Assert.That(_secondBasketUrl, Is.Not.EqualTo(_firstBasketUrl));
 		}
 
 
