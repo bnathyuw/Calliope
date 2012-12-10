@@ -1,17 +1,16 @@
 ﻿using System.Net;
-using System.Web.Script.Serialization;
 
 namespace Calliope.Gestalt.Tests
 {
-	internal class TestWebResponse
+	internal class TestWebResponse<T>
 	{
-		private readonly string _responseBody;
 		private readonly WebHeaderCollection _headers;
+		private readonly T _responseEntity;
 
-		public TestWebResponse(WebHeaderCollection headers, string responseBody)
+		public TestWebResponse(WebHeaderCollection headers, T responseEntity)
 		{
 			_headers = headers;
-			_responseBody = responseBody;
+			_responseEntity = responseEntity;
 		}
 
 		public string this[string key]
@@ -22,9 +21,12 @@ namespace Calliope.Gestalt.Tests
 			}
 		}
 
-		public T Deserialize<T>()
+		public T Body
 		{
-			return new JavaScriptSerializer().Deserialize<T>(_responseBody);
+			get
+			{
+				return _responseEntity;
+			}
 		}
 	}
 }

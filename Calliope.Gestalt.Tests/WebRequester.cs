@@ -9,24 +9,48 @@ namespace Calliope.Gestalt.Tests
 {
 	static internal class WebRequester
 	{
-		public static TestWebResponse DoRequest(string url, string method, object body = null)
+		public static TestWebResponse<T> DoRequest<T>(string url, string method, T body = default(T))
 		{
-			var request = WebRequest.Create(url) as HttpWebRequest;
-			Assert.That(request != null, "webRequest != null");
-			request.Method = method;
-			request.Accept = "application/json";
+			var request = CreateRequest(url, method);
+			
 			Console.WriteLine("REQUEST {0:o}\n=====\n{1} {2} HTTP/1.1\n{3}", DateTime.Now, method, url, request.Headers);
+			
 			if (method == "POST")
 			{
-				var bodyString = new JavaScriptSerializer().Serialize(body);
-				var bodyBytes = Encoding.UTF8.GetBytes(bodyString);
-				request.ContentLength = bodyBytes.Length;
-				request.ContentType = "application/json";
-				using (var requestStream = request.GetRequestStream())
-					requestStream.Write(bodyBytes, 0, bodyBytes.Length);
-				Console.WriteLine(bodyString);
+				WriteBody(body, request);
 			}
+			
 			Console.WriteLine();
+			
+			var response = GetResponse(request);
+			
+			var responseBody = GetResponseBody(response);
+
+			Console.WriteLine("RESPONSE {0:o}\n=====\nHTTP/1.1 {1} {2}\n{3}\n{4}", DateTime.Now, (int) response.StatusCode, response.StatusCode, response.Headers, responseBody);
+			Console.WriteLine();
+			
+			var responseEntity = GetResponseEntity<T>(responseBody);
+			
+			return new TestWebResponse<T>(response.Headers, responseEntity);
+		}
+
+		private static T GetResponseEntity<T>(string responseBody)
+		{
+			var responseEntity = new JavaScriptSerializer().Deserialize<T>(responseBody);
+			return responseEntity;
+		}
+
+		private static string GetResponseBody(HttpWebResponse response)
+		{
+			var responseStream = response.GetResponseStream();
+			Assert.That(responseStream != null, "responseStream != null");
+			var streamReader = new StreamReader(responseStream);
+			var responseBody = streamReader.ReadToEnd();
+			return responseBody;
+		}
+
+		private static HttpWebResponse GetResponse(HttpWebRequest request)
+		{
 			HttpWebResponse response;
 			try
 			{
@@ -37,14 +61,27 @@ namespace Calliope.Gestalt.Tests
 				response = ex.Response as HttpWebResponse;
 			}
 			Assert.That(response != null, "webResponse != null");
-			var responseStream = response.GetResponseStream();
-			Assert.That(responseStream != null, "responseStream != null");
+			return response;
+		}
 
-			var streamReader = new StreamReader(responseStream);
-			var responseBody = streamReader.ReadToEnd();
-			Console.WriteLine("RESPONSE {0:o}\n=====\nHTTP/1.1 {1} {2}\n{3}\n{4}", DateTime.Now, (int) response.StatusCode, response.StatusCode, response.Headers, responseBody);
-			Console.WriteLine();
-			return new TestWebResponse(response.Headers, responseBody);
+		private static HttpWebRequest CreateRequest(string url, string method)
+		{
+			var request = WebRequest.Create(url) as HttpWebRequest;
+			Assert.That(request != null, "webRequest != null");
+			request.Method = method;
+			request.Accept = "application/json";
+			return request;
+		}
+
+		private static void WriteBody(object body, HttpWebRequest request)
+		{
+			var bodyString = new JavaScriptSerializer().Serialize(body);
+			var bodyBytes = Encoding.UTF8.GetBytes(bodyString);
+			request.ContentLength = bodyBytes.Length;
+			request.ContentType = "application/json";
+			using (var requestStream = request.GetRequestStream())
+				requestStream.Write(bodyBytes, 0, bodyBytes.Length);
+			Console.WriteLine(bodyString);
 		}
 	}
 }
