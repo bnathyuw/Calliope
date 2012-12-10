@@ -7,7 +7,7 @@ namespace Calliope.Basket
 		public BasketModule()
 		{
 			Post["/"] = o => Negotiate
-				                 .WithHeader("Location", "/1")
+				                 .WithHeader("Location", "/baskets/1")
 				                 .WithModel(new Basket {Id = 1, Items = new string[] {}});
 		}
 	}

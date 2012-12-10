@@ -40,7 +40,7 @@ namespace Calliope.Gestalt.Tests
 			Assert.That(basket != null, "basket != null");
 
 			var basketUrl = postBasketResponse.Headers["Location"];
-			Assert.That(basketUrl != null, "basketUrl != null");
+			Assert.That(basketUrl, Is.EqualTo("/baskets/1"));
 		}
 	}
 
