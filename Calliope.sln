@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Basket", "Calliope.Basket\Calliope.Basket.csproj", "{CF66164C-A850-44EB-A16A-B0A15AA8257F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Gestalt.Tests", "Calliope.Gestalt.Tests\Calliope.Gestalt.Tests.csproj", "{1A535DF7-FE9F-4B5A-AD39-865B90C65A79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Basket.Feature.Tests", "Calliope.Basket.Feature.Tests\Calliope.Basket.Feature.Tests.csproj", "{F0C31640-53E6-4249-8BED-9A4D64143294}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{CF66164C-A850-44EB-A16A-B0A15AA8257F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF66164C-A850-44EB-A16A-B0A15AA8257F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF66164C-A850-44EB-A16A-B0A15AA8257F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A535DF7-FE9F-4B5A-AD39-865B90C65A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A535DF7-FE9F-4B5A-AD39-865B90C65A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A535DF7-FE9F-4B5A-AD39-865B90C65A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A535DF7-FE9F-4B5A-AD39-865B90C65A79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0C31640-53E6-4249-8BED-9A4D64143294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0C31640-53E6-4249-8BED-9A4D64143294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0C31640-53E6-4249-8BED-9A4D64143294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0C31640-53E6-4249-8BED-9A4D64143294}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
