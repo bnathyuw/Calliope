@@ -10,16 +10,15 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		private string _firstBasketUrl;
 		private string _secondBasketUrl;
 		private const string ApplicationRoot = "http://localhost/calliope";
-		private const string BasketRoot = ApplicationRoot + "/baskets";
 
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			var firstBasketResponse = WebRequester.DoRequest<Basket>(BasketRoot + "/", "POST");
+			var firstBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
 			_firstBasket = firstBasketResponse.Body;
 			_firstBasketUrl = firstBasketResponse["Location"];
 
-			var secondBasketResponse = WebRequester.DoRequest<Basket>(BasketRoot + "/", "POST");
+			var secondBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
 			_secondBasket = secondBasketResponse.Body;
 			_secondBasketUrl = secondBasketResponse["Location"];
 		}

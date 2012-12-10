@@ -9,7 +9,6 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 	public class When_an_item_is_added
 	{
 		private const string ApplicationRoot = "http://localhost/calliope";
-		private const string BasketRoot = ApplicationRoot + "/baskets";
 		private Item _item;
 		private TestWebResponse<Item> _response;
 		private string _itemLocation;
@@ -20,14 +19,14 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
 		{
-			var postBasketResponse = WebRequester.DoRequest<Basket>(BasketRoot + "/", "POST");
+			var postBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
 
 			_basketUrl = postBasketResponse["Location"];
 
 			_poems = WebRequester.DoRequest<IEnumerable<Poem>>(ApplicationRoot + "/poems/", "GET").Body;
 			_poem = _poems.ElementAt(2);
 
-			_response = WebRequester.DoRequest(BasketRoot + _basketUrl + "/items/", "POST", new Item {Id = _poem.Id});
+			_response = WebRequester.DoRequest(_basketUrl + "items/", "POST", new Item {Id = _poem.Id});
 
 			_item = _response.Body;
 			_itemLocation = _response["Location"];
@@ -42,7 +41,7 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		[Test]
 		public void Then_its_location_is_correct()
 		{
-			Assert.That(_itemLocation, Is.EqualTo(_basketUrl + "/items/" + _poem.Id));
+			Assert.That(_itemLocation, Is.EqualTo(_basketUrl + "items/" + _poem.Id + "/"));
 		}
 
 		[Test]

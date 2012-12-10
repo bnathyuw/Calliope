@@ -10,12 +10,11 @@ namespace Calliope.Gestalt.Tests
 		private TestWebResponse<Basket> _response;
 		private string _basketUrl;
 		private const string ApplicationRoot = "http://localhost/calliope";
-		private const string BasketRoot = ApplicationRoot + "/baskets";
 
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			_response = WebRequester.DoRequest<Basket>(BasketRoot + "/", "POST");
+			_response = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
 
 			_basket = _response.Body;
 
@@ -31,7 +30,7 @@ namespace Calliope.Gestalt.Tests
 		[Test]
 		public void Then_its_location_is_correct()
 		{
-			Assert.That(_basketUrl, Is.EqualTo("/" + _basket.Id));
+			Assert.That(_basketUrl, Is.EqualTo(ApplicationRoot + "/baskets/" + _basket.Id + "/"));
 		}
 
 		[Test]

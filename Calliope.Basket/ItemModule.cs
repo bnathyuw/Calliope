@@ -12,10 +12,15 @@ namespace Calliope.Basket
 				                             {
 					                             var basketId = (int) o.basketid;
 					                             var item = CreateItem(this.Bind<Item>(), basketId);
-					                             return Negotiate.WithHeader("Location", String.Format("/{0}/items/{1}", basketId, item.Id))
+					                             return Negotiate.WithHeader("Location", GetItemUrl(basketId, item.Id))
 					                                             .WithStatusCode(HttpStatusCode.Created)
 					                                             .WithModel(item);
 				                             };
+		}
+
+		private string GetItemUrl(int basketId, int itemId)
+		{
+			return string.Format("{0}://{1}{2}/{3}/items/{4}/", Request.Url.Scheme, Request.Url.HostName, Request.Url.BasePath, basketId, itemId);
 		}
 
 		private static Item CreateItem(Item item, int basketId)

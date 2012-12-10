@@ -9,16 +9,15 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		private Basket _basket;
 		private TestWebResponse<Basket> _response;
 		private const string ApplicationRoot = "http://localhost/calliope";
-		private const string BasketRoot = ApplicationRoot + "/baskets";
 
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			var postResponse = WebRequester.DoRequest<Basket>(BasketRoot + "/", "POST");
+			var postResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
 
 			var basketUrl = postResponse["Location"];
 
-			_response = WebRequester.DoRequest<Basket>(BasketRoot + basketUrl + "/", "GET");
+			_response = WebRequester.DoRequest<Basket>(basketUrl + "/", "GET");
 
 			_basket = _response.Body;
 		}
