@@ -18,7 +18,6 @@ namespace Calliope.Gestalt.Tests
 		{
 			get
 			{
-				
 				return _headers[key];
 			}
 		}

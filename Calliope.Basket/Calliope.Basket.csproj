@@ -72,6 +72,7 @@
     <Compile Include="Basket.cs" />
     <Compile Include="BasketModule.cs" />
     <Compile Include="BasketStore.cs" />
+    <Compile Include="ItemModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
