@@ -13,22 +13,17 @@ namespace Calliope.Basket
 					            var basket = CreateBasket();
 					            return Negotiate
 									.WithStatusCode(HttpStatusCode.Created)
-						            .WithHeader("Location", GetBasketUrl(basket.Id))
+						            .WithHeader("Location", this.GetBasketUrl(basket.Id))
 						            .WithModel(basket);
 				            };
 
-			Get["/{basketid}"] = o =>
+			Get["/{basketid}/"] = o =>
 				                     {
 					                     var basket = RetrieveBasket((int)o.basketid);
 					                     return Negotiate
 						                     .WithStatusCode(HttpStatusCode.OK)
 						                     .WithModel(basket);
 				                     };
-		}
-
-		private string GetBasketUrl(int basketId)
-		{
-			return string.Format("{0}://{1}{2}/{3}/", Request.Url.Scheme, Request.Url.HostName, Request.Url.BasePath, basketId);
 		}
 
 		private static Basket RetrieveBasket(int basketId)
