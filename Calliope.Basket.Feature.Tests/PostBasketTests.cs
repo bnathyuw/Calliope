@@ -9,19 +9,26 @@ namespace Calliope.Basket.Feature.Tests
 	public class PostBasketTests
 	{
 		private BrowserResponse _browserResponse;
+		private Browser _browser;
 
 		[SetUp]
 		public void SetUp()
 		{
 			Console.WriteLine("Testing {0}", typeof (BasketModule));
-			var browser = new Browser(new DefaultNancyBootstrapper());
-			var browserResponse = browser.Post("/", with =>
+			_browser = new Browser(new DefaultNancyBootstrapper());
+			var browserResponse = PostBasket();
+			Assert.That(browserResponse != null, "browserResponse != null");
+			_browserResponse = browserResponse;
+		}
+
+		private BrowserResponse PostBasket()
+		{
+			var browserResponse = _browser.Post("/", with =>
 				                                        {
 					                                        with.Body("");
 					                                        with.Accept("application/json");
 				                                        });
-			Assert.That(browserResponse != null, "browserResponse != null");
-			_browserResponse = browserResponse;
+			return browserResponse;
 		}
 
 		[Test]
@@ -35,6 +42,15 @@ namespace Calliope.Basket.Feature.Tests
 		public void Location_is_returned_in_header()
 		{
 			Assert.That(_browserResponse.Headers["Location"] != null, "Location != null");
+		}
+
+		[Test]
+		public void Adding_another_basket_returns_a_different_one()
+		{
+			var firstBasket = _browserResponse.Body.DeserializeJson<Basket>();
+			var secondBasketResponse = PostBasket();
+			var secondBasket = secondBasketResponse.Body.DeserializeJson<Basket>();
+			Assert.That(secondBasket.Id, Is.Not.EqualTo(firstBasket.Id));
 		}
 	}
 }
