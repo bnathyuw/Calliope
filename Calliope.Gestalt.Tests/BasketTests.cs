@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests
 {
@@ -15,7 +14,6 @@ namespace Calliope.Gestalt.Tests
 			var postBasketResponse = WebRequester.DoRequest<Basket>(BasketRoot + "/", "POST");
 
 			var postedBasket = postBasketResponse.Body;
-			Assert.That(postedBasket != null, "basket != null");
 
 			var basketUrl = postBasketResponse["Location"];
 			Assert.That(basketUrl, Is.EqualTo("/" + postedBasket.Id));
@@ -49,7 +47,7 @@ namespace Calliope.Gestalt.Tests
 			var basketUrl = postBasketResponse["Location"];
 
 			const int itemId = 1;
-			var postItemResponse = WebRequester.DoRequest<Item>(BasketRoot + basketUrl + "/items/", "POST", new Item {Id = itemId});
+			var postItemResponse = WebRequester.DoRequest(BasketRoot + basketUrl + "/items/", "POST", new Item {Id = itemId});
 
 			var postedItem = postItemResponse.Body;
 
