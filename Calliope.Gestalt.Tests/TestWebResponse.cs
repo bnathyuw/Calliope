@@ -1,28 +1,26 @@
-﻿using System.IO;
-using System.Net;
+﻿using System.Net;
 using System.Web.Script.Serialization;
-using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests
 {
 	internal class TestWebResponse
 	{
-		private readonly HttpWebResponse _response;
 		private readonly string _responseBody;
+		private readonly WebHeaderCollection _headers;
 
-		public TestWebResponse(HttpWebResponse response)
+		public TestWebResponse(WebHeaderCollection headers, string responseBody)
 		{
-			_response = response;
-			var responseStream = response.GetResponseStream();
-			Assert.That(responseStream != null, "responseStream != null");
-
-			var streamReader = new StreamReader(responseStream);
-			_responseBody = streamReader.ReadToEnd();
+			_headers = headers;
+			_responseBody = responseBody;
 		}
 
 		public string this[string key]
 		{
-			get { return _response.Headers[key]; }
+			get
+			{
+				
+				return _headers[key];
+			}
 		}
 
 		public T Deserialize<T>()

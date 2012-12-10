@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Nancy;
+﻿using Nancy;
 
 namespace Calliope.Basket
 {
@@ -12,12 +10,22 @@ namespace Calliope.Basket
 				            {
 					            var basket = CreateBasket();
 					            return Negotiate
-						            .WithHeader("Location", "/baskets/1")
+						            .WithHeader("Location", "/" + basket.Id)
 						            .WithModel(basket);
 				            };
 
-			Get["/{basketid}"] = o => Negotiate
-				                          .WithModel(new Basket {Id = 1, Items = new string[] {}});
+			Get["/{basketid}"] = o =>
+				                     {
+					                     var basket = RetrieveBasket((int)o.basketid);
+					                     return Negotiate
+						                     .WithModel(basket);
+				                     };
+		}
+
+		private static Basket RetrieveBasket(int basketId)
+		{
+			var basket = BasketStore.Find(basketId);
+			return basket;
 		}
 
 		private static Basket CreateBasket()
@@ -25,17 +33,6 @@ namespace Calliope.Basket
 			var basket = new Basket {Items = new string[] {}};
 			BasketStore.Save(basket);
 			return basket;
-		}
-	}
-
-	internal static class BasketStore
-	{
-		private static readonly IList<Basket> Store = new List<Basket>();
-
-		public static void Save(Basket basket)
-		{
-			basket.Id = Store.Any() ? Store.Max(b => b.Id) + 1 : 1;
-			Store.Add(basket);
 		}
 	}
 }
