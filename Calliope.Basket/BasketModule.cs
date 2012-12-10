@@ -9,11 +9,9 @@ namespace Calliope.Basket
 			Post["/"] = o => Negotiate
 				                 .WithHeader("Location", "/baskets/1")
 				                 .WithModel(new Basket {Id = 1, Items = new string[] {}});
+
+			Get["/{basketid}"] = o => Negotiate
+				                          .WithModel(new Basket {Id = 1, Items = new string[] {}});
 		}
-	}
-	public class Basket
-	{
-		public int Id { get; set; }
-		public string[] Items { get; set; }
 	}
 }

@@ -37,9 +37,4 @@ namespace Calliope.Basket.Feature.Tests
 			Assert.That(_browserResponse.Headers["Location"] != null, "Location != null");
 		}
 	}
-	public class Basket
-	{
-		public int Id { get; set; }
-		public string[] Items { get; set; }
-	}
 }
