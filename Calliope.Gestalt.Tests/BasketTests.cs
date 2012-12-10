@@ -12,22 +12,7 @@ namespace Calliope.Gestalt.Tests
 		[Test]
 		public void CreateBasket_creates_a_basket_which_can_be_retrieved()
 		{
-			var postBasketRequest = WebRequest.Create("http://localhost/calliope/baskets/") as HttpWebRequest;
-			Assert.That(postBasketRequest != null, "webRequest != null");
-			postBasketRequest.Method = "POST";
-			postBasketRequest.Accept = "application/json";
-			new StreamWriter(postBasketRequest.GetRequestStream()).Write("");
-
-			HttpWebResponse postBasketResponse;
-			try
-			{
-				postBasketResponse = postBasketRequest.GetResponse() as HttpWebResponse;
-			}
-			catch (WebException ex)
-			{
-				postBasketResponse = ex.Response as HttpWebResponse;
-			}
-			Assert.That(postBasketResponse != null, "webResponse != null");
+			var postBasketResponse = DoRequest("http://localhost/calliope/baskets/", "POST");
 
 			var postResponseStream = postBasketResponse.GetResponseStream();
 			Assert.That(postResponseStream != null, "responseStream != null");
@@ -42,22 +27,8 @@ namespace Calliope.Gestalt.Tests
 			var basketUrl = postBasketResponse.Headers["Location"];
 			Assert.That(basketUrl, Is.EqualTo("/baskets/1"));
 
-			var getBasketRequest = WebRequest.Create("http://localhost/calliope" + basketUrl) as HttpWebRequest;
-			Assert.That(getBasketRequest != null, "getBasketReqeust != null");
-			getBasketRequest.Method = "GET";
-			getBasketRequest.Accept = "application/json";
-
-			HttpWebResponse getBasketResponse;
-			try
-			{
-				getBasketResponse = getBasketRequest.GetResponse() as HttpWebResponse;
-			}
-			catch (WebException ex)
-			{
-				getBasketResponse = ex.Response as HttpWebResponse;
-			}
-			Assert.That(getBasketResponse != null, "getBasketResponse != null");
-
+			var getBasketResponse = DoRequest("http://localhost/calliope" + basketUrl, "GET");
+			
 			var getResponseStream = getBasketResponse.GetResponseStream();
 			Assert.That(getResponseStream != null, "responseStream != null");
 
@@ -68,6 +39,27 @@ namespace Calliope.Gestalt.Tests
 			var getBasket = new JavaScriptSerializer().Deserialize<Basket>(getResponseBody);
 			Assert.That(getBasket != null, "basket != null");
 
+		}
+
+		private static HttpWebResponse DoRequest(string url, string method)
+		{
+			var request = WebRequest.Create(url) as HttpWebRequest;
+			Assert.That(request != null, "webRequest != null");
+			request.Method = method;
+			request.Accept = "application/json";
+			if (method == "POST") new StreamWriter(request.GetRequestStream()).Write("");
+
+			HttpWebResponse response;
+			try
+			{
+				response = request.GetResponse() as HttpWebResponse;
+			}
+			catch (WebException ex)
+			{
+				response = ex.Response as HttpWebResponse;
+			}
+			Assert.That(response != null, "webResponse != null");
+			return response;
 		}
 	}
 }
