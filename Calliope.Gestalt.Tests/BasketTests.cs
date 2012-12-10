@@ -9,11 +9,13 @@ namespace Calliope.Gestalt.Tests
 	[TestFixture]
 	public class BasketTests
 	{
-		[Test, Explicit]
+		[Test]
 		public void CreateBasket_creates_a_basket()
 		{
-			var webRequest = WebRequest.Create("http://localhost/calliope/baskets/");
+			var webRequest = WebRequest.Create("http://localhost/calliope/baskets/") as HttpWebRequest;
+			Assert.That(webRequest != null, "webRequest != null");
 			webRequest.Method = "POST";
+			webRequest.Accept = "application/json";
 			var requestStream = webRequest.GetRequestStream();
 			var streamWriter = new StreamWriter(requestStream);
 			streamWriter.Write("");
@@ -34,7 +36,7 @@ namespace Calliope.Gestalt.Tests
 
 			var streamReader = new StreamReader(responseStream);
 			var responseBody = streamReader.ReadToEnd();
-			Console.WriteLine("responseBody");
+			Console.WriteLine(responseBody);
 
 			var basket = new JavaScriptSerializer().Deserialize<Basket>(responseBody);
 			Assert.That(basket != null, "basket != null");
