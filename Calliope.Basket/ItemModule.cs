@@ -11,11 +11,9 @@ namespace Calliope.Basket
 		{
 			Post["/{basketid}/items/"] = o =>
 				                             {
-					                             int basketId = o.basketid;
-					                             var item = this.Bind<Item>();
-					                             var model = CreateItem(item, basketId);
+					                             var item = CreateItem(this.Bind<Item>(), (int) o.basketid);
 					                             return Negotiate.WithStatusCode(HttpStatusCode.Created)
-					                                             .WithModel(model);
+					                                             .WithModel(item);
 				                             };
 		}
 
