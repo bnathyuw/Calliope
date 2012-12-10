@@ -12,7 +12,7 @@ namespace Calliope.Gestalt.Tests
 		private const string ApplicationRoot = "http://localhost/calliope";
 		private const string BasketRoot = ApplicationRoot + "/baskets";
 
-		[SetUp]
+		[TestFixtureSetUp]
 		public void SetUp()
 		{
 			_response = WebRequester.DoRequest<Basket>(BasketRoot + "/", "POST");

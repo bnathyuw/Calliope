@@ -21,7 +21,7 @@ namespace Calliope.Basket
 				                     {
 					                     var basket = RetrieveBasket((int)o.basketid);
 					                     return Negotiate
-						                     .WithStatusCode(HttpStatusCode.Found)
+						                     .WithStatusCode(HttpStatusCode.OK)
 						                     .WithModel(basket);
 				                     };
 		}

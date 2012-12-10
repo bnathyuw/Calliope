@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using System;
+using Nancy;
 using Nancy.ModelBinding;
 
 namespace Calliope.Basket
@@ -9,8 +10,10 @@ namespace Calliope.Basket
 		{
 			Post["/{basketid}/items/"] = o =>
 				                             {
-					                             var item = CreateItem(this.Bind<Item>(), (int) o.basketid);
-					                             return Negotiate.WithStatusCode(HttpStatusCode.Created)
+					                             var basketId = (int) o.basketid;
+					                             var item = CreateItem(this.Bind<Item>(), basketId);
+					                             return Negotiate.WithHeader("Location", String.Format("/{0}/items/{1}", basketId, item.Id))
+					                                             .WithStatusCode(HttpStatusCode.Created)
 					                                             .WithModel(item);
 				                             };
 		}
