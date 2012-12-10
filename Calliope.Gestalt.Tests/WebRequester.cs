@@ -28,7 +28,7 @@ namespace Calliope.Gestalt.Tests
 			
 			var responseEntity = GetResponseEntity<T>(responseBody);
 			
-			return new TestWebResponse<T>(response.Headers, responseEntity);
+			return new TestWebResponse<T>(response.Headers, responseEntity, response.StatusCode);
 		}
 
 		private static T GetResponseEntity<T>(string responseBody)

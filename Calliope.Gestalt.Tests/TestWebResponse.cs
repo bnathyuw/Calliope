@@ -6,11 +6,13 @@ namespace Calliope.Gestalt.Tests
 	{
 		private readonly WebHeaderCollection _headers;
 		private readonly T _responseEntity;
+		private readonly HttpStatusCode _statusCode;
 
-		public TestWebResponse(WebHeaderCollection headers, T responseEntity)
+		public TestWebResponse(WebHeaderCollection headers, T responseEntity, HttpStatusCode statusCode)
 		{
 			_headers = headers;
 			_responseEntity = responseEntity;
+			_statusCode = statusCode;
 		}
 
 		public string this[string key]
@@ -27,6 +29,11 @@ namespace Calliope.Gestalt.Tests
 			{
 				return _responseEntity;
 			}
+		}
+
+		public HttpStatusCode StatusCode
+		{
+			get { return _statusCode; }
 		}
 	}
 }

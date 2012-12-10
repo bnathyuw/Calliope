@@ -2,12 +2,12 @@
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=05530CD671EB6D4091B614457637F696/AbsolutePath/@EntryValue">C:\Projects\Calliope\Calliope.Gestalt.Tests\Calliope.Gestalt.Tests.csproj.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=05530CD671EB6D4091B614457637F696/RelativePath/@EntryValue">..\Calliope.Gestalt.Tests\Calliope.Gestalt.Tests.csproj.DotSettings</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=05530CD671EB6D4091B614457637F696/@KeyIndexDefined">True</s:Boolean>
-	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=E344C4CB48033246B5D68AC89327BC0F/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=E344C4CB48033246B5D68AC89327BC0F/AbsolutePath/@EntryValue">C:\Projects\Calliope\Calliope.Basket.Feature.Tests\Calliope.Basket.Feature.Tests.csproj.DotSettings</s:String>
-	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=E344C4CB48033246B5D68AC89327BC0F/RelativePath/@EntryValue">..\Calliope.Basket.Feature.Tests\Calliope.Basket.Feature.Tests.csproj.DotSettings</s:String>
+	
+	
+	
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File05530CD671EB6D4091B614457637F696/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File05530CD671EB6D4091B614457637F696/IsOn/@EntryValue">False</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File05530CD671EB6D4091B614457637F696/RelativePriority/@EntryValue">1</s:Double>
-	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileE344C4CB48033246B5D68AC89327BC0F/@KeyIndexDefined">True</s:Boolean>
-	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileE344C4CB48033246B5D68AC89327BC0F/IsOn/@EntryValue">False</s:Boolean>
-	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileE344C4CB48033246B5D68AC89327BC0F/RelativePriority/@EntryValue">2</s:Double></wpf:ResourceDictionary>
+	
+	
+	</wpf:ResourceDictionary>
