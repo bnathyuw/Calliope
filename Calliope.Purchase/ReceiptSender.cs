@@ -6,6 +6,19 @@ namespace Calliope.Purchase
 	{
 		public static void SendReceipt(Purchase purchase, Basket basket)
 		{
+			var body = BuildReceiptBody(purchase, basket);
+			var email = new Email
+				            {
+					            To = purchase.User,
+					            From = "sales@calliope.com",
+					            Subject = "Thank you for your purchase from Calliope",
+					            Body = body
+				            };
+			EmailSenderWrapper.SendEmail(email);
+		}
+
+		private static string BuildReceiptBody(Purchase purchase, Basket basket)
+		{
 			var stringBuilder = new StringBuilder();
 			stringBuilder.AppendFormat(@"Dear {0}
 Thank you for your purchase from Calliope; here is your receipt.
@@ -17,14 +30,7 @@ Items purchased:
 			}
 			stringBuilder.AppendFormat("Total: ¤{0}\nYours,\nCalliope", purchase.Total);
 			var body = stringBuilder.ToString();
-			var email = new Email
-				            {
-					            To = purchase.User,
-					            From = "sales@calliope.com",
-					            Subject = "Thank you for your purchase from Calliope",
-					            Body = body
-				            };
-			EmailSenderWrapper.SendEmail(email);
+			return body;
 		}
 	}
 }
