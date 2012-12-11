@@ -74,22 +74,4 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			Assert.That(_cardTransaction.Amount, Is.EqualTo(_amount));
 		}
 	}
-
-	public class CardTransaction
-	{
-		public string Reference { get; set; }
-
-		public int Amount { get; set; }
-	}
-
-	public class Purchase
-	{
-		public int BasketId { get; set; }
-
-		public int Total { get; set; }
-
-		public string Status { get; set; }
-
-		public string CardToken { get; set; }
-	}
 }

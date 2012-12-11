@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Nancy;
+﻿using Nancy;
 using Nancy.ModelBinding;
 
 namespace Calliope.Stub.PaymentProvider
@@ -25,27 +23,4 @@ namespace Calliope.Stub.PaymentProvider
 				                                           };
 		} 
 	}
-
-	public static class TransactionStore
-	{
-		private static readonly IList<CardTransaction> Store = new List<CardTransaction>();
-
-		public static IEnumerable<CardTransaction> GetAll(string cardToken)
-		{
-			return Store.Where(ct => ct.CardToken == cardToken);
-		}
-
-		public static void Add(CardTransaction cardTransaction)
-		{
-			Store.Add(cardTransaction);
-		}
-	}
-
-	public class CardTransaction
-	{
-		public string CardToken { get; set; }
-		public int Amount { get; set; }
-		public string Reference { get; set; }
-	}
-
 }
