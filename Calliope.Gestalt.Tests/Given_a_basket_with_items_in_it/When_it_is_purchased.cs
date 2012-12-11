@@ -15,8 +15,8 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		private CardTransaction _cardTransaction;
 		private int _amount;
 		private string _basketUrl;
+		private Card _card;
 		private const string ApplicationRoot = "http://localhost/calliope";
-		private const string CardToken = "123456";
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
@@ -26,6 +26,8 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			And_various_poems_exist();
 
 			And_three_items_are_added_to_the_basket();
+
+			And_a_card_is_added();
 
 			When_the_basket_is_purchased();
 
@@ -53,15 +55,21 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			}
 		}
 
+		private void And_a_card_is_added()
+		{
+			var response = WebRequester.DoRequest(ApplicationRoot + "/stub/payment-provider/cards/", "POST", new Card { Number = "5454545454545454", ExpiryDate = "2020/10" });
+			_card = response.Body;
+		}
+
 		private void When_the_basket_is_purchased()
 		{
-			_postPurchaseResponse = WebRequester.DoRequest(ApplicationRoot + "/purchases/", "POST", new Purchase {BasketId = _basket.Id, CardToken = CardToken});
+			_postPurchaseResponse = WebRequester.DoRequest(ApplicationRoot + "/purchases/", "POST", new Purchase {BasketId = _basket.Id, CardToken = _card.Token});
 			_purchase = _postPurchaseResponse.Body;
 		}
 
 		private void And_the_most_recent_card_transaction_is_retrieved()
 		{
-			var cardTransactions = WebRequester.DoRequest<IEnumerable<CardTransaction>>(ApplicationRoot + "/stub/payment-provider/cards/" + CardToken + "/transactions/", "GET").Body;
+			var cardTransactions = WebRequester.DoRequest<IEnumerable<CardTransaction>>(ApplicationRoot + "/stub/payment-provider/cards/" + _card.Token + "/transactions/", "GET").Body;
 			_cardTransaction = cardTransactions.LastOrDefault();
 		}
 
