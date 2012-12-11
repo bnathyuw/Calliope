@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Basket", "Calliope
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Gestalt.Tests", "Calliope.Gestalt.Tests\Calliope.Gestalt.Tests.csproj", "{1A535DF7-FE9F-4B5A-AD39-865B90C65A79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Catalogue", "Calliope.Catalogue\Calliope.Catalogue.csproj", "{96C90EA3-F7CC-4F1E-9827-0081381C6B16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Poems", "Calliope.Poems\Calliope.Poems.csproj", "{96C90EA3-F7CC-4F1E-9827-0081381C6B16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

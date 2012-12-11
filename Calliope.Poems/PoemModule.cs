@@ -2,7 +2,7 @@
 using System.Linq;
 using Nancy;
 
-namespace Calliope.Catalogue
+namespace Calliope.Poems
 {
 	public class PoemModule : NancyModule
 	{
