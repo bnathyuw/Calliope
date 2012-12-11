@@ -66,7 +66,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Card.cs" />
     <Compile Include="CardModule.cs" />
+    <Compile Include="CardStore.cs" />
     <Compile Include="CardTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionModule.cs" />

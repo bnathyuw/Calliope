@@ -16,7 +16,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		private int _amount;
 		private string _basketUrl;
 		private Card _card;
-		private Receipt _receipt;
+		private Email _email;
 		private const string ApplicationRoot = "http://localhost/calliope";
 		private const string User = "matthew.butt@7digital.com";
 
@@ -35,7 +35,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 
 			And_the_most_recent_card_transaction_is_retrieved();
 
-			And_the_most_recent_receipt_is_retrieved();
+			And_the_most_recent_email_is_retrieved();
 		}
 
 		private void Given_a_basket()
@@ -82,10 +82,10 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			_cardTransaction = cardTransactions.LastOrDefault();
 		}
 
-		private void And_the_most_recent_receipt_is_retrieved()
+		private void And_the_most_recent_email_is_retrieved()
 		{
-			var response = WebRequester.DoRequest<IEnumerable<Receipt>>(ApplicationRoot + "/stub/email-sender/receipts/", "GET");
-			_receipt = response.Body.LastOrDefault();
+			var response = WebRequester.DoRequest<IEnumerable<Email>>(ApplicationRoot + "/stub/email-sender/emails/", "GET");
+			_email = response.Body.LastOrDefault();
 		}
 
 		[Test]
@@ -133,18 +133,19 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		[Test]
 		public void Then_a_receipt_is_sent()
 		{
-			Assert.That(_receipt, Is.Not.Null);
+			Assert.That(_email, Is.Not.Null);
 		}
 
 		[Test]
 		public void Then_the_receipt_goes_to_the_correct_receipient()
 		{
-			Assert.That(_receipt.To, Is.EqualTo(User));
+			Assert.That(_email.To, Is.EqualTo(User));
 		}
-	}
 
-	internal class Receipt
-	{
-		public string To { get; set; }
+		[Test]
+		public void Then_the_receipt_comes_from_the_correct_sender()
+		{
+			Assert.That(_email.From, Is.EqualTo("sales@calliope.com"));
+		}
 	}
 }
