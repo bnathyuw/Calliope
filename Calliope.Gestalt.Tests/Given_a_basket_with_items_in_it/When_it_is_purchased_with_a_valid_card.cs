@@ -196,5 +196,14 @@ Items purchased:
 		{
 			Assert.That(_folio.Count(), Is.EqualTo(_poems.Count()));
 		}
+
+		[Test]
+		public void Then_each_item_purchased_is_in_the_users_folio()
+		{
+			foreach (var poem in _poems)
+			{
+				Assert.That(_folio.Any(fi => fi.Title == poem.Title && fi.Poet == poem.Poet && fi.FirstLine == poem.FirstLine));
+			}
+		}
 	}
 }

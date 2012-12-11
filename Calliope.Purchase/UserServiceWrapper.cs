@@ -13,7 +13,13 @@ namespace Calliope.Purchase
 			request.Method = "POST";
 			request.Accept = "application/json";
 			var javaScriptSerializer = new JavaScriptSerializer();
-			var bodyString = javaScriptSerializer.Serialize(new FolioItem());
+			var folioItem = new FolioItem
+				                {
+					                Title = item.Title,
+					                Poet = item.Poet,
+					                FirstLine = item.FirstLine
+				                };
+			var bodyString = javaScriptSerializer.Serialize(folioItem);
 			var bodyBytes = Encoding.UTF8.GetBytes(bodyString);
 			request.ContentLength = bodyBytes.Length;
 			request.ContentType = "application/json";
