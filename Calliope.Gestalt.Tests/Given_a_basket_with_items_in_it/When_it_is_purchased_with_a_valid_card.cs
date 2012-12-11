@@ -147,5 +147,11 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		{
 			Assert.That(_email.From, Is.EqualTo("sales@calliope.com"));
 		}
+
+		[Test]
+		public void Then_the_receipt_has_the_correct_subject()
+		{
+			Assert.That(_email.Subject, Is.EqualTo("Thank you for your purchase from Calliope"));
+		}
 	}
 }

@@ -4,7 +4,13 @@ namespace Calliope.Purchase
 	{
 		public static void SendReceipt(Purchase purchase)
 		{
-			EmailSenderWrapper.SendEmail(purchase.User, "sales@calliope.com");
+			var email = new Email
+				            {
+					            To = purchase.User,
+					            From = "sales@calliope.com",
+					            Subject = "Thank you for your purchase from Calliope"
+				            };
+			EmailSenderWrapper.SendEmail(email);
 		}
 	}
 }
