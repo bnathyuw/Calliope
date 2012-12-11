@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -189,19 +188,5 @@ Items purchased:
 			stringBuilder.AppendFormat("Total: ¤{0}\nYours,\nCalliope", _amount);
 			Assert.That(_email.Body, Is.EqualTo(stringBuilder.ToString()));
 		}
-	}
-
-	internal class User
-	{
-		public int Id { get; set; }
-		public string Email { get; set; }
-	}
-
-	internal class FolioItem
-	{
-		public string Title { get; set; }
-		public string Poet { get; set; }
-		public string FirstLine { get; set; }
-		public Uri DownloadLink { get; set; }
 	}
 }

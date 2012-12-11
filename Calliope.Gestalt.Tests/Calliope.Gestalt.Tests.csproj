@@ -47,8 +47,10 @@
     <Compile Include="Given_an_empty_basket\When_various_items_are_added.cs" />
     <Compile Include="Given_a_basket_with_items_in_it\Card.cs" />
     <Compile Include="Given_a_basket_with_items_in_it\CardTransaction.cs" />
+    <Compile Include="Given_a_basket_with_items_in_it\FolioItem.cs" />
     <Compile Include="Given_a_basket_with_items_in_it\Purchase.cs" />
     <Compile Include="Given_a_basket_with_items_in_it\Email.cs" />
+    <Compile Include="Given_a_basket_with_items_in_it\User.cs" />
     <Compile Include="Given_a_basket_with_items_in_it\When_it_is_purchased_with_a_valid_card.cs" />
     <Compile Include="Poem.cs" />
     <Compile Include="Given_an_empty_basket\When_an_item_is_added.cs" />

@@ -70,6 +70,7 @@
     <Compile Include="BasketServiceWrapper.cs" />
     <Compile Include="CardTransaction.cs" />
     <Compile Include="EmailSenderWrapper.cs" />
+    <Compile Include="FolioItem.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="PaymentServiceWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +78,8 @@
     <Compile Include="PurchaseModule.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="ReceiptSender.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserServiceWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
