@@ -10,6 +10,6 @@
 
 		public string CardToken { get; set; }
 
-		public string User { get; set; }
+		public int UserId { get; set; }
 	}
 }

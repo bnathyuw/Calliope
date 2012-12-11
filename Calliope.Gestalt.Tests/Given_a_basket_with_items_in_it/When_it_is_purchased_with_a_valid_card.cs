@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -18,13 +19,17 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		private string _basketUrl;
 		private Card _card;
 		private Email _email;
+		private IEnumerable<FolioItem> _folio;
+		private User _user;
 		private const string ApplicationRoot = "http://localhost/calliope";
-		private const string User = "matthew.butt@7digital.com";
+		private const string UserEmail = "matthew.butt@7digital.com";
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
 		{
 			Given_a_basket();
+
+			And_a_user();
 
 			And_various_poems_exist();
 
@@ -37,6 +42,8 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			And_the_most_recent_card_transaction_is_retrieved();
 
 			And_the_most_recent_email_is_retrieved();
+
+			And_the_users_folio_is_retrieved();
 		}
 
 		private void Given_a_basket()
@@ -44,6 +51,12 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			var postBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
 			_basket = postBasketResponse.Body;
 			_basketUrl = postBasketResponse["Location"];
+		}
+
+		private void And_a_user()
+		{
+			var response = WebRequester.DoRequest(ApplicationRoot + "/users/", "POST", new User {Email = UserEmail});
+			_user = response.Body;
 		}
 
 		private void And_various_poems_exist()
@@ -72,7 +85,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 				                                                                                        {
 					                                                                                        BasketId = _basket.Id,
 					                                                                                        CardToken = _card.Token,
-					                                                                                        User = User
+					                                                                                        UserId = _user.Id
 				                                                                                        });
 			_purchase = _postPurchaseResponse.Body;
 		}
@@ -87,6 +100,12 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		{
 			var response = WebRequester.DoRequest<IEnumerable<Email>>(ApplicationRoot + "/stub/email-sender/emails/", "GET");
 			_email = response.Body.LastOrDefault();
+		}
+
+		private void And_the_users_folio_is_retrieved()
+		{
+			var response = WebRequester.DoRequest<IEnumerable<FolioItem>>(ApplicationRoot + "/users/" + _user.Id + "/folio/", "GET");
+			_folio = response.Body;
 		}
 
 		[Test]
@@ -140,7 +159,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		[Test]
 		public void Then_the_receipt_goes_to_the_correct_receipient()
 		{
-			Assert.That(_email.To, Is.EqualTo(User));
+			Assert.That(_email.To, Is.EqualTo(UserEmail));
 		}
 
 		[Test]
@@ -162,7 +181,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			stringBuilder.AppendFormat(@"Dear {0}
 Thank you for your purchase from Calliope; here is your receipt.
 Items purchased:
-", User);
+", UserEmail);
 			foreach (var poem in _poems)
 			{
 				stringBuilder.AppendFormat("* {0} '{1}' (¤{2})\n", poem.Poet, poem.Title, poem.Price);
@@ -170,5 +189,19 @@ Items purchased:
 			stringBuilder.AppendFormat("Total: ¤{0}\nYours,\nCalliope", _amount);
 			Assert.That(_email.Body, Is.EqualTo(stringBuilder.ToString()));
 		}
+	}
+
+	internal class User
+	{
+		public int Id { get; set; }
+		public string Email { get; set; }
+	}
+
+	internal class FolioItem
+	{
+		public string Title { get; set; }
+		public string Poet { get; set; }
+		public string FirstLine { get; set; }
+		public Uri DownloadLink { get; set; }
 	}
 }
