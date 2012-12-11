@@ -9,5 +9,7 @@
 		public string Status { get; set; }
 
 		public string CardToken { get; set; }
+
+		public string User { get; set; }
 	}
 }

@@ -18,6 +18,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		private Card _card;
 		private Receipt _receipt;
 		private const string ApplicationRoot = "http://localhost/calliope";
+		private const string User = "matthew.butt@7digital.com";
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
@@ -66,7 +67,12 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 
 		private void When_the_basket_is_purchased()
 		{
-			_postPurchaseResponse = WebRequester.DoRequest(ApplicationRoot + "/purchases/", "POST", new Purchase {BasketId = _basket.Id, CardToken = _card.Token});
+			_postPurchaseResponse = WebRequester.DoRequest(ApplicationRoot + "/purchases/", "POST", new Purchase
+				                                                                                        {
+					                                                                                        BasketId = _basket.Id,
+					                                                                                        CardToken = _card.Token,
+					                                                                                        User = User
+				                                                                                        });
 			_purchase = _postPurchaseResponse.Body;
 		}
 
@@ -129,9 +135,16 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		{
 			Assert.That(_receipt, Is.Not.Null);
 		}
+
+		[Test]
+		public void Then_the_receipt_goes_to_the_correct_receipient()
+		{
+			Assert.That(_receipt.To, Is.EqualTo(User));
+		}
 	}
 
 	internal class Receipt
 	{
+		public string To { get; set; }
 	}
 }

@@ -27,7 +27,7 @@ namespace Calliope.Purchase
 	
 			PaymentServiceWrapper.MakePayment(basket.Total, "basket:" + basket.Id, purchase.CardToken);
 
-			EmailSenderWrapper.SendReceipt();
+			EmailSenderWrapper.SendReceipt(purchase.User);
 
 			purchase.Total = basket.Total;
 			purchase.Status = "successful";
@@ -37,13 +37,13 @@ namespace Calliope.Purchase
 
 	internal static class EmailSenderWrapper
 	{
-		public static Receipt SendReceipt()
+		public static Receipt SendReceipt(string to)
 		{
 			var request = (HttpWebRequest)WebRequest.Create("http://localhost/calliope/stub/email-sender/receipts/");
 			request.Method = "POST";
 			request.Accept = "application/json";
 			var javaScriptSerializer = new JavaScriptSerializer();
-			var bodyString = javaScriptSerializer.Serialize(new Receipt ());
+			var bodyString = javaScriptSerializer.Serialize(new Receipt {To = to});
 			var bodyBytes = Encoding.UTF8.GetBytes(bodyString);
 			request.ContentLength = bodyBytes.Length;
 			request.ContentType = "application/json";
@@ -59,5 +59,6 @@ namespace Calliope.Purchase
 
 	internal class Receipt
 	{
+		public string To { get; set; }
 	}
 }
