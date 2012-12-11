@@ -1,6 +1,6 @@
-﻿namespace Calliope.Gestalt.Tests
+﻿namespace Calliope.Gestalt.Tests.Model
 {
-	public class Item
+	public class Poem
 	{
 		public int Id { get; set; }
 		public string Title { get; set; }

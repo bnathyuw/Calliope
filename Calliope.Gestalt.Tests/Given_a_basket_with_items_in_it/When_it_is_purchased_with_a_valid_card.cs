@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Text;
+using Calliope.Gestalt.Tests.Model;
+using Calliope.Gestalt.Tests.Web;
 using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it

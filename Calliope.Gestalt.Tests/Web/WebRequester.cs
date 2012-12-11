@@ -5,7 +5,7 @@ using System.Text;
 using System.Web.Script.Serialization;
 using NUnit.Framework;
 
-namespace Calliope.Gestalt.Tests
+namespace Calliope.Gestalt.Tests.Web
 {
 	static internal class WebRequester
 	{

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Calliope.Gestalt.Tests.Model;
+using Calliope.Gestalt.Tests.Web;
 using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests.Given_an_empty_basket

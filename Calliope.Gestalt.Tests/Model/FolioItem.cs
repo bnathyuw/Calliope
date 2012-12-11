@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
+namespace Calliope.Gestalt.Tests.Model
 {
 	internal class FolioItem
 	{

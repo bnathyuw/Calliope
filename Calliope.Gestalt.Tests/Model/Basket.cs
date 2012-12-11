@@ -1,4 +1,4 @@
-﻿namespace Calliope.Gestalt.Tests
+﻿namespace Calliope.Gestalt.Tests.Model
 {
 	public class Basket
 	{

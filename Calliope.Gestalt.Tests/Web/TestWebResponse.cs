@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Calliope.Gestalt.Tests
+namespace Calliope.Gestalt.Tests.Web
 {
 	internal class TestWebResponse<T>
 	{
