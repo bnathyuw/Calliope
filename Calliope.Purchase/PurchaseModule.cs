@@ -22,11 +22,11 @@ namespace Calliope.Purchase
 			var basket = BasketServiceWrapper.Get(purchase.BasketId);
 	
 			PaymentServiceWrapper.MakePayment(basket.Total, "basket:" + basket.Id, purchase.CardToken);
-
-			ReceiptSender.SendReceipt(purchase);
-
-			purchase.Total = basket.Total;
 			purchase.Status = "successful";
+			purchase.Total = basket.Total;
+
+			ReceiptSender.SendReceipt(purchase, basket);
+
 			return purchase;
 		}
 	}

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
@@ -152,6 +153,22 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		public void Then_the_receipt_has_the_correct_subject()
 		{
 			Assert.That(_email.Subject, Is.EqualTo("Thank you for your purchase from Calliope"));
+		}
+
+		[Test]
+		public void Then_the_receipt_has_the_correct_content()
+		{
+			var stringBuilder = new StringBuilder();
+			stringBuilder.AppendFormat(@"Dear {0}
+Thank you for your purchase from Calliope; here is your receipt.
+Items purchased:
+", User);
+			foreach (var poem in _poems)
+			{
+				stringBuilder.AppendFormat("* {0} '{1}' (¤{2})\n", poem.Poet, poem.Title, poem.Price);
+			}
+			stringBuilder.AppendFormat("Total: ¤{0}\nYours,\nCalliope", _amount);
+			Assert.That(_email.Body, Is.EqualTo(stringBuilder.ToString()));
 		}
 	}
 }
