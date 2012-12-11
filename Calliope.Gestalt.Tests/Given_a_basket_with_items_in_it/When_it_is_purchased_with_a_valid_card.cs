@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 {
 	[TestFixture]
-	public class When_it_is_purchased
+	public class When_it_is_purchased_with_a_valid_card
 	{
 		private TestWebResponse<Purchase> _postPurchaseResponse;
 		private Purchase _purchase;
@@ -16,6 +16,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		private int _amount;
 		private string _basketUrl;
 		private Card _card;
+		private Receipt _receipt;
 		private const string ApplicationRoot = "http://localhost/calliope";
 
 		[TestFixtureSetUp]
@@ -32,6 +33,8 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			When_the_basket_is_purchased();
 
 			And_the_most_recent_card_transaction_is_retrieved();
+
+			And_the_most_recent_receipt_is_retrieved();
 		}
 
 		private void Given_a_basket()
@@ -71,6 +74,12 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		{
 			var cardTransactions = WebRequester.DoRequest<IEnumerable<CardTransaction>>(ApplicationRoot + "/stub/payment-provider/cards/" + _card.Token + "/transactions/", "GET").Body;
 			_cardTransaction = cardTransactions.LastOrDefault();
+		}
+
+		private void And_the_most_recent_receipt_is_retrieved()
+		{
+			var response = WebRequester.DoRequest<IEnumerable<Receipt>>(ApplicationRoot + "/stub/email-sender/receipts/", "GET");
+			_receipt = response.Body.LastOrDefault();
 		}
 
 		[Test]
@@ -114,5 +123,15 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		{
 			Assert.That(_cardTransaction.Amount, Is.EqualTo(_amount));
 		}
+
+		[Test]
+		public void Then_a_receipt_is_sent()
+		{
+			Assert.That(_receipt, Is.Not.Null);
+		}
+	}
+
+	internal class Receipt
+	{
 	}
 }

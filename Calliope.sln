@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Purchase", "Callio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Stub.PaymentProvider", "Calliope.Stub.PaymentProvider\Calliope.Stub.PaymentProvider.csproj", "{75D303A0-EB05-49D7-8974-517D5D7F0E3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Stub.EmailSender", "Calliope.Stub.EmailSender\Calliope.Stub.EmailSender.csproj", "{2C6AED22-E0F5-41B0-BC3D-3221BB098448}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{75D303A0-EB05-49D7-8974-517D5D7F0E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75D303A0-EB05-49D7-8974-517D5D7F0E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75D303A0-EB05-49D7-8974-517D5D7F0E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C6AED22-E0F5-41B0-BC3D-3221BB098448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C6AED22-E0F5-41B0-BC3D-3221BB098448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C6AED22-E0F5-41B0-BC3D-3221BB098448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C6AED22-E0F5-41B0-BC3D-3221BB098448}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
