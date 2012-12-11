@@ -11,6 +11,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		private TestWebResponse<Purchase> _postPurchaseResponse;
 		private Purchase _purchase;
 		private Basket _basket;
+		private Poem[] _poems;
 		private const string ApplicationRoot = "http://localhost/calliope";
 
 		[TestFixtureSetUp]
@@ -20,11 +21,11 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			_basket = postBasketResponse.Body;
 			var basketUrl = postBasketResponse["Location"];
 
-			var poems = WebRequester.DoRequest<IEnumerable<Poem>>(ApplicationRoot + "/poems/", "GET").Body.ToArray();
+			_poems = WebRequester.DoRequest<IEnumerable<Poem>>(ApplicationRoot + "/poems/", "GET").Body.ToArray();
 			
-			WebRequester.DoRequest(basketUrl + "items/", "POST", new Item { Id = poems[0].Id });
-			WebRequester.DoRequest(basketUrl + "items/", "POST", new Item { Id = poems[1].Id });
-			WebRequester.DoRequest(basketUrl + "items/", "POST", new Item { Id = poems[2].Id });
+			WebRequester.DoRequest(basketUrl + "items/", "POST", new Item { Id = _poems[0].Id });
+			WebRequester.DoRequest(basketUrl + "items/", "POST", new Item { Id = _poems[1].Id });
+			WebRequester.DoRequest(basketUrl + "items/", "POST", new Item { Id = _poems[2].Id });
 
 			_postPurchaseResponse = WebRequester.DoRequest(ApplicationRoot + "/purchases/", "POST", new Purchase {BasketId = _basket.Id});
 			_purchase = _postPurchaseResponse.Body;
@@ -41,10 +42,26 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		{
 			Assert.That(_purchase.BasketId, Is.EqualTo(_basket.Id));
 		}
+
+		[Test]
+		public void Then_the_purchase_shows_the_correct_total()
+		{
+			Assert.That(_purchase.Total, Is.EqualTo(_poems.Take(3).Sum(p => p.Price)));
+		}
+
+		[Test]
+		public void Then_the_purchase_shows_success()
+		{
+			Assert.That(_purchase.Status, Is.EqualTo("successful"));
+		}
 	}
 
 	public class Purchase
 	{
 		public int BasketId { get; set; }
+
+		public int Total { get; set; }
+
+		public string Status { get; set; }
 	}
 }
