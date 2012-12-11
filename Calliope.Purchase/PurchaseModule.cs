@@ -23,7 +23,7 @@ namespace Calliope.Purchase
 	
 			PaymentServiceWrapper.MakePayment(basket.Total, "basket:" + basket.Id, purchase.CardToken);
 
-			EmailSenderWrapper.SendEmail(purchase.User);
+			ReceiptSender.SendReceipt(purchase);
 
 			purchase.Total = basket.Total;
 			purchase.Status = "successful";

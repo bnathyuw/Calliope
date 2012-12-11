@@ -76,6 +76,7 @@
     <Compile Include="Purchase.cs" />
     <Compile Include="PurchaseModule.cs" />
     <Compile Include="Email.cs" />
+    <Compile Include="ReceiptSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
