@@ -190,5 +190,11 @@ Items purchased:
 			stringBuilder.AppendFormat("Total: ¤{0}\nYours,\nCalliope", _amount);
 			Assert.That(_email.Body, Is.EqualTo(stringBuilder.ToString()));
 		}
+
+		[Test]
+		public void Then_the_users_folio_contains_the_correct_number_of_items()
+		{
+			Assert.That(_folio.Count(), Is.EqualTo(_poems.Count()));
+		}
 	}
 }
