@@ -1,4 +1,4 @@
-﻿namespace Calliope.Purchase
+﻿namespace Calliope.Purchase.Model
 {
 	public class Purchase
 	{

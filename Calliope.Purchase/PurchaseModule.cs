@@ -1,4 +1,6 @@
-﻿using Nancy;
+﻿using Calliope.Purchase.Model;
+using Calliope.Purchase.Service;
+using Nancy;
 using Nancy.ModelBinding;
 using HttpStatusCode = Nancy.HttpStatusCode;
 
@@ -10,14 +12,14 @@ namespace Calliope.Purchase
 		{
 			Post["/"] = o =>
 				            {
-					            var request = this.Bind<Purchase>();
+					            var request = this.Bind<Model.Purchase>();
 					            var purchase = MakePurchase(request);
 					            return Negotiate.WithStatusCode(HttpStatusCode.Created)
 					                            .WithModel(purchase);
 				            };
 		}
 
-		private static Purchase MakePurchase(Purchase purchase)
+		private static Model.Purchase MakePurchase(Model.Purchase purchase)
 		{
 			var basket = BasketServiceWrapper.Get(purchase.BasketId);
 	

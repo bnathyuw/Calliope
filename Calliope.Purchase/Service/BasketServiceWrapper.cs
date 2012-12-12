@@ -1,8 +1,9 @@
 ﻿using System.IO;
 using System.Net;
+using Calliope.Purchase.Model;
 using Nancy.Json;
 
-namespace Calliope.Purchase
+namespace Calliope.Purchase.Service
 {
 	internal static class BasketServiceWrapper
 	{

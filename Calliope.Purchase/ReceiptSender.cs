@@ -1,10 +1,12 @@
 using System.Text;
+using Calliope.Purchase.Model;
+using Calliope.Purchase.Service;
 
 namespace Calliope.Purchase
 {
 	static internal class ReceiptSender
 	{
-		public static void SendReceipt(Purchase purchase, Basket basket, User user)
+		public static void SendReceipt(Model.Purchase purchase, Basket basket, User user)
 		{
 			var body = BuildReceiptBody(purchase, basket, user);
 			var email = new Email
@@ -17,7 +19,7 @@ namespace Calliope.Purchase
 			EmailSenderWrapper.SendEmail(email);
 		}
 
-		private static string BuildReceiptBody(Purchase purchase, Basket basket, User user)
+		private static string BuildReceiptBody(Model.Purchase purchase, Basket basket, User user)
 		{
 			var stringBuilder = new StringBuilder();
 			stringBuilder.AppendFormat(@"Dear {0}

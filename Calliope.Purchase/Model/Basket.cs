@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Calliope.Purchase
+namespace Calliope.Purchase.Model
 {
 	public class Basket
 	{
