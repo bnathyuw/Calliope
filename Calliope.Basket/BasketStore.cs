@@ -17,5 +17,10 @@ namespace Calliope.Basket
 		{
 			return Store.SingleOrDefault(b => b.Id == basketId);
 		}
+
+		public static void Delete(Basket basket)
+		{
+			Store.Remove(basket);
+		}
 	}
 }

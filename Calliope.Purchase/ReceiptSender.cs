@@ -6,8 +6,10 @@ namespace Calliope.Purchase
 {
 	static internal class ReceiptSender
 	{
-		public static void SendReceipt(Model.Purchase purchase, Basket basket, User user)
+		public static void SendReceipt(Model.Purchase purchase, Basket basket)
 		{
+			var user = UserServiceWrapper.GetUser(purchase.UserId);
+
 			var body = BuildReceiptBody(purchase, basket, user);
 			var email = new Email
 				            {

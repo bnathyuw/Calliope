@@ -22,19 +22,26 @@ namespace Calliope.Purchase
 		private static Model.Purchase MakePurchase(Model.Purchase purchase)
 		{
 			var basket = BasketServiceWrapper.Get(purchase.BasketId);
-	
 			PaymentServiceWrapper.MakePayment(basket.Total, "basket:" + basket.Id, purchase.CardToken);
+			UpdatePurchase(purchase, basket);
+			ReceiptSender.SendReceipt(purchase, basket);
+			AddItemsToLocker(purchase, basket);
+			BasketServiceWrapper.Delete(purchase.BasketId);
+			return purchase;
+		}
+
+		private static void UpdatePurchase(Model.Purchase purchase, Basket basket)
+		{
 			purchase.Status = "successful";
 			purchase.Total = basket.Total;
+		}
 
-			User user = UserServiceWrapper.GetUser(purchase.UserId);
-			ReceiptSender.SendReceipt(purchase, basket, user);
+		private static void AddItemsToLocker(Model.Purchase purchase, Basket basket)
+		{
 			foreach (var item in basket.Items)
 			{
 				UserServiceWrapper.AddToLocker(item, purchase.UserId);
 			}
-
-			return purchase;
 		}
 	}
 }

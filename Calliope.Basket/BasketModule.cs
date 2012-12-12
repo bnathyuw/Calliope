@@ -12,23 +12,41 @@ namespace Calliope.Basket
 				            {
 					            var basket = CreateBasket();
 					            return Negotiate
-									.WithStatusCode(HttpStatusCode.Created)
+						            .WithStatusCode(HttpStatusCode.Created)
 						            .WithHeader("Location", this.GetBasketUrl(basket.Id))
 						            .WithModel(basket);
 				            };
 
 			Get["/{basketid}/"] = o =>
-				                     {
-					                     var basket = RetrieveBasket((int)o.basketid);
-					                     return Negotiate
-						                     .WithStatusCode(HttpStatusCode.OK)
-						                     .WithModel(basket);
-				                     };
+				                      {
+					                      var basket = RetrieveBasket((int)o.basketid);
+					                      return basket == null
+						                             ? Negotiate.WithStatusCode(HttpStatusCode.NotFound)
+						                             : Negotiate
+							                               .WithStatusCode(HttpStatusCode.OK)
+							                               .WithModel(basket);
+				                      };
+
+			Delete["/{basketid}/"] = o =>
+				                         {
+					                         var basket = DeleteBasket((int) o.basketid);
+					                         return Negotiate
+						                         .WithStatusCode(HttpStatusCode.OK)
+						                         .WithModel(basket);
+				                         };
+		}
+
+		private Basket DeleteBasket(int basketId)
+		{
+			var basket = BasketStore.Find(basketId);
+			BasketStore.Delete(basket);
+			return basket;
 		}
 
 		private static Basket RetrieveBasket(int basketId)
 		{
 			var basket = BasketStore.Find(basketId);
+			if (basket == null) return null;
 			var items = ItemStore.FindForBasket(basketId).ToList();
 			basket.Items = items;
 			basket.Total = items.Sum(i => i.Price);

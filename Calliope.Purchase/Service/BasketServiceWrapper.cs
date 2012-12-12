@@ -18,5 +18,13 @@ namespace Calliope.Purchase.Service
 			var responseBody = streamReader.ReadToEnd();
 			return new JavaScriptSerializer().Deserialize<Basket>(responseBody);
 		}
+
+		public static void Delete(int id)
+		{
+			var request = (HttpWebRequest)WebRequest.Create("http://localhost/calliope/baskets/" + id + "/");
+			request.Method = "DELETE";
+			request.Accept = "application/json";
+			request.GetResponse();
+		}
 	}
 }

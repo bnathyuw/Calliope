@@ -205,5 +205,12 @@ Items purchased:
 				Assert.That(_folio.Any(fi => fi.Title == poem.Title && fi.Poet == poem.Poet && fi.FirstLine == poem.FirstLine));
 			}
 		}
+
+		[Test]
+		public void Then_the_basket_can_no_longer_be_retrieved()
+		{
+			var response = WebRequester.DoRequest<Basket>(_basketUrl, "GET");
+			Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+		}
 	}
 }
