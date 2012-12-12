@@ -36,7 +36,7 @@ namespace Calliope.Basket
 				                         };
 		}
 
-		private Basket DeleteBasket(int basketId)
+		private static Basket DeleteBasket(int basketId)
 		{
 			var basket = BasketStore.Find(basketId);
 			BasketStore.Delete(basket);

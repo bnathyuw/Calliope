@@ -17,7 +17,7 @@ namespace Calliope.Stub.PaymentProvider
 				                  };
 		}
 
-		private Card CreateCard(Card card)
+		private static Card CreateCard(Card card)
 		{
 			card.Token = Guid.NewGuid().ToString();
 			CardStore.Add(card);

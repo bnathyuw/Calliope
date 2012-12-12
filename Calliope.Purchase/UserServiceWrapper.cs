@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Text;
 using Calliope.Purchase.Model;
@@ -28,6 +29,7 @@ namespace Calliope.Purchase
 				requestStream.Write(bodyBytes, 0, bodyBytes.Length);
 			var response = request.GetResponse();
 			var responseStream = response.GetResponseStream();
+			Debug.Assert(responseStream != null, "responseStream != null");
 			var streamReader = new StreamReader(responseStream);
 			var responseBody = streamReader.ReadToEnd();
 			return javaScriptSerializer.Deserialize<FolioItem>(responseBody);
@@ -40,6 +42,7 @@ namespace Calliope.Purchase
 			request.Accept = "application/json";
 			var response = request.GetResponse();
 			var responseStream = response.GetResponseStream();
+			Debug.Assert(responseStream != null, "responseStream != null");
 			var streamReader = new StreamReader(responseStream);
 			var responseBody = streamReader.ReadToEnd();
 			return new JavaScriptSerializer().Deserialize<User>(responseBody);

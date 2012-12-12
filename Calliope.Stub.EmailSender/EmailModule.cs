@@ -23,7 +23,7 @@ namespace Calliope.Stub.EmailSender
 				                    };
 		}
 
-		private Emails CreateEmail(Emails emails)
+		private static Emails CreateEmail(Emails emails)
 		{
 			ReceiptStore.Add(emails);
 			return emails;
