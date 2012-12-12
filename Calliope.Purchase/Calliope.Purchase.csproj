@@ -77,9 +77,9 @@
     <Compile Include="Model\Purchase.cs" />
     <Compile Include="PurchaseModule.cs" />
     <Compile Include="Model\Email.cs" />
-    <Compile Include="ReceiptSender.cs" />
+    <Compile Include="OtherStuff\ReceiptSender.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="UserServiceWrapper.cs" />
+    <Compile Include="Service\UserServiceWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

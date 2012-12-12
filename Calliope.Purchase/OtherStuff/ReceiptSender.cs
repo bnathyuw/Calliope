@@ -2,7 +2,7 @@ using System.Text;
 using Calliope.Purchase.Model;
 using Calliope.Purchase.Service;
 
-namespace Calliope.Purchase
+namespace Calliope.Purchase.OtherStuff
 {
 	static internal class ReceiptSender
 	{
