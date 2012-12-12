@@ -1,4 +1,4 @@
-namespace Calliope.Purchase.Model
+namespace Calliope.Receipt.Model
 {
 	internal class User
 	{

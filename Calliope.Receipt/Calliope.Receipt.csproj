@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{099C5BC8-B81C-4DF1-8750-461D0FAE1C12}</ProjectGuid>
+    <ProjectGuid>{8547C1B1-BB4C-4281-A3F6-5EB1A4940FBB}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Calliope.Purchase</RootNamespace>
-    <AssemblyName>Calliope.Purchase</AssemblyName>
+    <RootNamespace>Calliope.Receipt</RootNamespace>
+    <AssemblyName>Calliope.Receipt</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
@@ -67,17 +67,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Basket.cs" />
-    <Compile Include="Model\Receipt.cs" />
-    <Compile Include="Service\ReceiptServiceWrapper.cs" />
-    <Compile Include="Service\BasketServiceWrapper.cs" />
-    <Compile Include="Model\CardTransaction.cs" />
-    <Compile Include="Model\FolioItem.cs" />
+    <Compile Include="Model\Email.cs" />
     <Compile Include="Model\Item.cs" />
-    <Compile Include="Service\PaymentServiceWrapper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\Purchase.cs" />
-    <Compile Include="PurchaseModule.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Service\BasketServiceWrapper.cs" />
+    <Compile Include="Service\EmailSenderWrapper.cs" />
     <Compile Include="Service\UserServiceWrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceiptModule.cs" />
+    <Compile Include="ReceiptSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -88,7 +86,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -102,9 +99,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49837</DevelopmentServerPort>
+          <DevelopmentServerPort>53078</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/calliope/purchases</IISUrl>
+          <IISUrl>http://localhost/calliope/receipts</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

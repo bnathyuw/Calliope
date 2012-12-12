@@ -2,10 +2,10 @@
 using System.IO;
 using System.Net;
 using System.Text;
-using Calliope.Purchase.Model;
+using Calliope.Receipt.Model;
 using Nancy.Json;
 
-namespace Calliope.Purchase.Service
+namespace Calliope.Receipt.Service
 {
 	internal static class EmailSenderWrapper
 	{

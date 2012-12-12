@@ -8,7 +8,5 @@
 		public string CardToken { get; set; }
 
 		public int UserId { get; set; }
-
-		public Basket Basket { get; set; }
 	}
 }

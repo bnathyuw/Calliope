@@ -1,9 +1,9 @@
 ﻿using Calliope.Purchase.Model;
-using Calliope.Purchase.OtherStuff;
 using Calliope.Purchase.Service;
 using Nancy;
 using Nancy.ModelBinding;
 using HttpStatusCode = Nancy.HttpStatusCode;
+
 
 namespace Calliope.Purchase
 {
@@ -25,7 +25,7 @@ namespace Calliope.Purchase
 			var basket = BasketServiceWrapper.Get(purchase.BasketId);
 			PaymentServiceWrapper.MakePayment(basket.Total, "basket:" + basket.Id, purchase.CardToken);
 			UpdatePurchase(purchase, basket);
-			ReceiptSender.SendReceipt(purchase, basket);
+			ReceiptServiceWrapper.SendReceipt(basket.Id, purchase.UserId);
 			AddItemsToLocker(purchase, basket);
 			BasketServiceWrapper.Delete(purchase.BasketId);
 			return purchase;

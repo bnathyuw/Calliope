@@ -1,16 +1,17 @@
 using System.Text;
-using Calliope.Purchase.Model;
-using Calliope.Purchase.Service;
+using Calliope.Receipt.Model;
+using Calliope.Receipt.Service;
 
-namespace Calliope.Purchase.OtherStuff
+namespace Calliope.Receipt
 {
 	static internal class ReceiptSender
 	{
-		public static void SendReceipt(Model.Purchase purchase, Basket basket)
+		public static void SendReceipt(int userId, int basketId)
 		{
-			var user = UserServiceWrapper.GetUser(purchase.UserId);
+			var basket = BasketServiceWrapper.Get(basketId);
+			var user = UserServiceWrapper.GetUser(userId);
 
-			var body = BuildReceiptBody(purchase, basket, user);
+			var body = BuildReceiptBody(basket, user, basket.Total);
 			var email = new Email
 				            {
 					            To = user.Email,
@@ -21,7 +22,7 @@ namespace Calliope.Purchase.OtherStuff
 			EmailSenderWrapper.SendEmail(email);
 		}
 
-		private static string BuildReceiptBody(Model.Purchase purchase, Basket basket, User user)
+		private static string BuildReceiptBody(Basket basket, User user, int total)
 		{
 			var stringBuilder = new StringBuilder();
 			stringBuilder.AppendFormat(@"Dear {0}
@@ -32,7 +33,7 @@ Items purchased:
 			{
 				stringBuilder.AppendFormat("* {0} '{1}' (¤{2})\n", item.Poet, item.Title, item.Price);
 			}
-			stringBuilder.AppendFormat("Total: ¤{0}\nYours,\nCalliope", purchase.Total);
+			stringBuilder.AppendFormat("Total: ¤{0}\nYours,\nCalliope", total);
 			var body = stringBuilder.ToString();
 			return body;
 		}
