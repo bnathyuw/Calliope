@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -8,44 +9,40 @@ namespace Calliope.WebSupport
 {
 	public class WebRequester
 	{
-		public static void Post<T>(string url, T body)
+		public static T Post<T>(string url, T body, Action<string> log = null)
 		{
-			var request = CreateRequest(url, "POST");
-			WriteRequestBody(body, request);
-			request.GetResponse();
+			var request = CreateRequest(url, "POST", log);
+			WriteRequestBody(body, request, log);
+			var response = (HttpWebResponse) request.GetResponse();
+			if(log != null) 
+				log(string.Format("\nRESPONSE {0:o}\n=====\nHTTP/1.1 {1} {2}\n{3}\n", DateTime.Now, (int)response.StatusCode, response.StatusCode, response.Headers));
+			return ReadResponseBody<T>(response, log);
 		}
 
-		public static T Get<T>(string url)
+		public static T Get<T>(string url, Action<string> log = null)
 		{
-			var request = CreateRequest(url, "GET");
+			var request = CreateRequest(url, "GET", log);
 			var response = request.GetResponse();
-			return ReadResponseBody<T>(response);
+			return ReadResponseBody<T>(response, log);
 		}
 
-		private static T ReadResponseBody<T>(WebResponse response)
+		public static void Delete(string url, Action<string> log = null)
 		{
-			var responseStream = response.GetResponseStream();
-			Debug.Assert(responseStream != null, "responseStream != null");
-			var streamReader = new StreamReader(responseStream);
-			var responseBody = streamReader.ReadToEnd();
-			return new JavaScriptSerializer().Deserialize<T>(responseBody);
-		}
-
-		public static void Delete(string url)
-		{
-			var request = CreateRequest(url, "DELETE");
+			var request = CreateRequest(url, "DELETE", log);
 			request.GetResponse();
 		}
 
-		private static HttpWebRequest CreateRequest(string url, string method)
+		private static HttpWebRequest CreateRequest(string url, string method, Action<string> log)
 		{
 			var request = (HttpWebRequest) WebRequest.Create(url);
 			request.Method = method;
 			request.Accept = "application/json";
+			if(log != null) 
+				log(string.Format("REQUEST {0:o}\n=====\n{1} {2} HTTP/1.1\n{3}", DateTime.Now, method, url, request.Headers));
 			return request;
 		}
 
-		private static void WriteRequestBody<T>(T body, HttpWebRequest request)
+		private static void WriteRequestBody<T>(T body, WebRequest request, Action<string> log)
 		{
 			var javaScriptSerializer = new JavaScriptSerializer();
 			var bodyString = javaScriptSerializer.Serialize(body);
@@ -54,6 +51,19 @@ namespace Calliope.WebSupport
 			request.ContentType = "application/json";
 			using (var requestStream = request.GetRequestStream())
 				requestStream.Write(bodyBytes, 0, bodyBytes.Length);
+			if(log != null) 
+				log(bodyString);
+		}
+
+		private static T ReadResponseBody<T>(WebResponse response, Action<string> log)
+		{
+			var responseStream = response.GetResponseStream();
+			Debug.Assert(responseStream != null, "responseStream != null");
+			var streamReader = new StreamReader(responseStream);
+			var responseBody = streamReader.ReadToEnd();
+			if (log != null) 
+				log(responseBody);
+			return new JavaScriptSerializer().Deserialize<T>(responseBody);
 		}
 	}
 }
