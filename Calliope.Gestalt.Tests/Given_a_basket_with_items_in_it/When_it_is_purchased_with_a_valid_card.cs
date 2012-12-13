@@ -32,11 +32,11 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 
 			And_a_user();
 
-			And_various_poems_exist();
+			And_various_poems();
 
-			And_three_items_are_added_to_the_basket();
+			And_three_items_in_the_basket();
 
-			And_a_card_is_added();
+			And_a_card();
 
 			When_the_basket_is_purchased();
 
@@ -60,12 +60,12 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			_user = response.Body;
 		}
 
-		private void And_various_poems_exist()
+		private void And_various_poems()
 		{
 			_poems = WebRequester.DoRequest<IEnumerable<Poem>>(ApplicationRoot + "/poems/", "GET").Body.Take(3).ToArray();
 		}
 
-		private void And_three_items_are_added_to_the_basket()
+		private void And_three_items_in_the_basket()
 		{
 			foreach (var poem in _poems)
 			{
@@ -74,7 +74,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 			}
 		}
 
-		private void And_a_card_is_added()
+		private void And_a_card()
 		{
 			var response = WebRequester.DoRequest(ApplicationRoot + "/stub/payment-provider/cards/", "POST", new Card { Number = "5454545454545454", ExpiryDate = "2020/10" });
 			_card = response.Body;
@@ -134,7 +134,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 		}
 
 		[Test]
-		public void Then_a_transaction_is_made_against_my_card()
+		public void Then_a_transaction_is_made_against_the_users_card()
 		{
 			Assert.That(_cardTransaction, Is.Not.Null);
 		}
