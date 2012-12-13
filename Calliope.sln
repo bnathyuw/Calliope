@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.User", "Calliope.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Receipt", "Calliope.Receipt\Calliope.Receipt.csproj", "{8547C1B1-BB4C-4281-A3F6-5EB1A4940FBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calliope.Payment", "Calliope.Payment\Calliope.Payment.csproj", "{B9E0F880-43A8-4088-9E93-71E623217749}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{8547C1B1-BB4C-4281-A3F6-5EB1A4940FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8547C1B1-BB4C-4281-A3F6-5EB1A4940FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8547C1B1-BB4C-4281-A3F6-5EB1A4940FBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9E0F880-43A8-4088-9E93-71E623217749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9E0F880-43A8-4088-9E93-71E623217749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9E0F880-43A8-4088-9E93-71E623217749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9E0F880-43A8-4088-9E93-71E623217749}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

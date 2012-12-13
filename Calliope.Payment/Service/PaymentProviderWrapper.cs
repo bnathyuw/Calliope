@@ -1,19 +1,19 @@
 ﻿using System.Net;
 using System.Text;
-using System.Web.Script.Serialization;
-using Calliope.Purchase.Model;
+using Calliope.Payment.Model;
+using Nancy.Json;
 
-namespace Calliope.Purchase.Service
+namespace Calliope.Payment.Service
 {
-	internal static class ReceiptServiceWrapper
+	internal static class PaymentProviderWrapper
 	{
-		public static void SendReceipt(int basketId, int userId)
+		public static void MakePayment(Model.Payment payment)
 		{
-			var request = (HttpWebRequest)WebRequest.Create("http://localhost/calliope/receipts/");
+			var request = (HttpWebRequest) WebRequest.Create("http://localhost/calliope/stub/payment-provider/cards/" + payment.CardToken + "/transactions/");
 			request.Method = "POST";
 			request.Accept = "application/json";
 			var javaScriptSerializer = new JavaScriptSerializer();
-			var bodyString = javaScriptSerializer.Serialize(new Receipt {BasketId = basketId, UserId = userId});
+			var bodyString = javaScriptSerializer.Serialize(new CardTransaction {Amount = payment.Amount, Reference = payment.Reference});
 			var bodyBytes = Encoding.UTF8.GetBytes(bodyString);
 			request.ContentLength = bodyBytes.Length;
 			request.ContentType = "application/json";

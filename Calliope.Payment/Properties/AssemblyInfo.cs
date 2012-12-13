@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Calliope.Receipt")]
+[assembly: AssemblyTitle("Calliope.Payment")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Calliope.Receipt")]
+[assembly: AssemblyProduct("Calliope.Payment")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d87a7b4f-d28c-439b-a2d8-a46c37823b37")]
+[assembly: Guid("5f81ef7d-f1e6-4b7a-b631-040008350022")]
 
 // Version information for an assembly consists of the following four values:
 //

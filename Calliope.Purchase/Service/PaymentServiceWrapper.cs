@@ -9,11 +9,11 @@ namespace Calliope.Purchase.Service
 	{
 		public static void MakePayment(int amount, string reference, string cardToken)
 		{
-			var request = (HttpWebRequest) WebRequest.Create("http://localhost/calliope/stub/payment-provider/cards/" + cardToken + "/transactions/");
+			var request = (HttpWebRequest) WebRequest.Create("http://localhost/calliope/payments/");
 			request.Method = "POST";
 			request.Accept = "application/json";
 			var javaScriptSerializer = new JavaScriptSerializer();
-			var bodyString = javaScriptSerializer.Serialize(new CardTransaction {Amount = amount, Reference = reference});
+			var bodyString = javaScriptSerializer.Serialize(new Payment {Amount = amount, Reference = reference, CardToken = cardToken});
 			var bodyBytes = Encoding.UTF8.GetBytes(bodyString);
 			request.ContentLength = bodyBytes.Length;
 			request.ContentType = "application/json";

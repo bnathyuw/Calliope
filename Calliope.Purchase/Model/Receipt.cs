@@ -1,4 +1,4 @@
-﻿namespace Calliope.Purchase.Service
+﻿namespace Calliope.Purchase.Model
 {
 	internal class Receipt
 	{

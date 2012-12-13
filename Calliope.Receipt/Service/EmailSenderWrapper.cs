@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using Calliope.Receipt.Model;
 using Nancy.Json;
@@ -9,7 +7,7 @@ namespace Calliope.Receipt.Service
 {
 	internal static class EmailSenderWrapper
 	{
-		public static Email SendEmail(Email email)
+		public static void SendEmail(Email email)
 		{
 			var request = (HttpWebRequest)WebRequest.Create("http://localhost/calliope/stub/email-sender/emails/");
 			request.Method = "POST";
@@ -21,12 +19,7 @@ namespace Calliope.Receipt.Service
 			request.ContentType = "application/json";
 			using (var requestStream = request.GetRequestStream())
 				requestStream.Write(bodyBytes, 0, bodyBytes.Length);
-			var response = request.GetResponse();
-			var responseStream = response.GetResponseStream();
-			Debug.Assert(responseStream != null, "responseStream != null");
-			var streamReader = new StreamReader(responseStream);
-			var responseBody = streamReader.ReadToEnd();
-			return javaScriptSerializer.Deserialize<Email>(responseBody);
+			request.GetResponse();
 		}
 	}
 }
