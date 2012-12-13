@@ -9,27 +9,30 @@ namespace Calliope.WebSupport
 {
 	public class WebRequester
 	{
-		public static T Post<T>(string url, T body, Action<string> log = null)
+		public static ApiResponse<T> Post<T>(string url, T body, Action<string> log = null)
 		{
 			var request = CreateRequest(url, "POST", log);
 			WriteRequestBody(body, request, log);
-			var response = (HttpWebResponse) request.GetResponse();
+			var response = GetResponse(request);
 			if(log != null) 
-				log(string.Format("\nRESPONSE {0:o}\n=====\nHTTP/1.1 {1} {2}\n{3}\n", DateTime.Now, (int)response.StatusCode, response.StatusCode, response.Headers));
-			return ReadResponseBody<T>(response, log);
+				log(string.Format("\nRESPONSE {0:o}\n=====\nHTTP/1.1 {1} {2}\n{3}", DateTime.Now, (int)response.StatusCode, response.StatusCode, response.Headers));
+			var responseBody = ReadResponseBody<T>(response, log);
+			return new ApiResponse<T>(response, responseBody);
 		}
 
-		public static T Get<T>(string url, Action<string> log = null)
+		public static ApiResponse<T> Get<T>(string url, Action<string> log = null)
 		{
 			var request = CreateRequest(url, "GET", log);
-			var response = request.GetResponse();
-			return ReadResponseBody<T>(response, log);
+			var response = GetResponse(request);
+			var responseBody = ReadResponseBody<T>(response, log);
+			return new ApiResponse<T>(response, responseBody);
 		}
 
-		public static void Delete(string url, Action<string> log = null)
+		public static ApiResponse<T> Delete<T>(string url, Action<string> log = null)
 		{
 			var request = CreateRequest(url, "DELETE", log);
-			request.GetResponse();
+			var response = GetResponse(request);
+			return new ApiResponse<T>(response);
 		}
 
 		private static HttpWebRequest CreateRequest(string url, string method, Action<string> log)
@@ -55,6 +58,19 @@ namespace Calliope.WebSupport
 				log(bodyString);
 		}
 
+		private static HttpWebResponse GetResponse(WebRequest request)
+		{
+			try
+			{
+				return (HttpWebResponse) request.GetResponse();
+			}
+			catch (WebException ex)
+			{
+				return (HttpWebResponse) ex.Response;
+			}
+
+		}
+
 		private static T ReadResponseBody<T>(WebResponse response, Action<string> log)
 		{
 			var responseStream = response.GetResponseStream();
@@ -64,6 +80,35 @@ namespace Calliope.WebSupport
 			if (log != null) 
 				log(responseBody);
 			return new JavaScriptSerializer().Deserialize<T>(responseBody);
+		}
+	}
+
+	public class ApiResponse<T>
+	{
+		private readonly HttpStatusCode _statusCode;
+		private readonly WebHeaderCollection _headers;
+		private readonly T _body;
+
+		public ApiResponse(HttpWebResponse response, T body = default(T))
+		{
+			_statusCode = response.StatusCode;
+			_headers = response.Headers;
+			_body = body;
+		}
+
+		public HttpStatusCode StatusCode
+		{
+			get { return _statusCode; }
+		}
+
+		public T Body
+		{
+			get { return _body; }
+		}
+
+		public string this[string key]
+		{
+			get { return _headers[key]; }
 		}
 	}
 }

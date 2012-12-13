@@ -8,13 +8,13 @@ namespace Calliope.Purchase.Service
 		public static Basket Get(int id)
 		{
 			var url = "http://localhost/calliope/baskets/" + id + "/";
-			return WebRequester.Get<Basket>(url);
+			return WebRequester.Get<Basket>(url).Body;
 		}
 
 		public static void Delete(int id)
 		{
 			var url = "http://localhost/calliope/baskets/" + id + "/";
-			WebRequester.Delete(url);
+			WebRequester.Delete<Basket>(url);
 		}
 	}
 }

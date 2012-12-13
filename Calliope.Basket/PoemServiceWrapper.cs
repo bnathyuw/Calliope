@@ -7,7 +7,7 @@ namespace Calliope.Basket
 		public static Poem Get(int id)
 		{
 			var url = "http://localhost/calliope/poems/" + id + "/";
-			return WebRequester.Get<Poem>(url);
+			return WebRequester.Get<Poem>(url).Body;
 		}
 	}
 }

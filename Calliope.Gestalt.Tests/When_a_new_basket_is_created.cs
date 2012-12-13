@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using Calliope.Gestalt.Tests.Model;
-using Calliope.Gestalt.Tests.Web;
+using Calliope.WebSupport;
 using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests
@@ -9,14 +9,14 @@ namespace Calliope.Gestalt.Tests
 	public class When_a_new_basket_is_created
 	{
 		private Basket _basket;
-		private TestWebResponse<Basket> _response;
+		private ApiResponse<Basket> _response;
 		private string _basketUrl;
 		private const string ApplicationRoot = "http://localhost/calliope";
 
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			_response = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
+			_response = WebRequester.Post(ApplicationRoot + "/baskets/", new Basket());
 
 			_basket = _response.Body;
 

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Calliope.Gestalt.Tests.Model;
-using Calliope.Gestalt.Tests.Web;
+using Calliope.WebSupport;
 using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
@@ -11,7 +11,7 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 	[TestFixture]
 	public class When_it_is_purchased_with_a_valid_card
 	{
-		private TestWebResponse<Purchase> _postPurchaseResponse;
+		private ApiResponse<Purchase> _postPurchaseResponse;
 		private Purchase _purchase;
 		private Basket _basket;
 		private Poem[] _poems;
@@ -49,40 +49,40 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 
 		private void Given_a_basket()
 		{
-			var postBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
+			var postBasketResponse = WebRequester.Post(ApplicationRoot + "/baskets/", new Basket());
 			_basket = postBasketResponse.Body;
 			_basketUrl = postBasketResponse["Location"];
 		}
 
 		private void And_a_user()
 		{
-			var response = WebRequester.DoRequest(ApplicationRoot + "/users/", "POST", new User {Email = UserEmail});
+			var response = WebRequester.Post(ApplicationRoot + "/users/", new User {Email = UserEmail});
 			_user = response.Body;
 		}
 
 		private void And_various_poems()
 		{
-			_poems = WebRequester.DoRequest<IEnumerable<Poem>>(ApplicationRoot + "/poems/", "GET").Body.Take(3).ToArray();
+			_poems = WebRequester.Get<IEnumerable<Poem>>(ApplicationRoot + "/poems/").Body.Take(3).ToArray();
 		}
 
 		private void And_three_items_in_the_basket()
 		{
 			foreach (var poem in _poems)
 			{
-				WebRequester.DoRequest(_basketUrl + "items/", "POST", new Item { Id = poem.Id });
+				WebRequester.Post(_basketUrl + "items/", new Item { Id = poem.Id });
 				_amount += poem.Price;
 			}
 		}
 
 		private void And_a_card()
 		{
-			var response = WebRequester.DoRequest(ApplicationRoot + "/stub/payment-provider/cards/", "POST", new Card { Number = "5454545454545454", ExpiryDate = "2020/10" });
+			var response = WebRequester.Post(ApplicationRoot + "/stub/payment-provider/cards/", new Card { Number = "5454545454545454", ExpiryDate = "2020/10" });
 			_card = response.Body;
 		}
 
 		private void When_the_basket_is_purchased()
 		{
-			_postPurchaseResponse = WebRequester.DoRequest(ApplicationRoot + "/purchases/", "POST", new Purchase
+			_postPurchaseResponse = WebRequester.Post(ApplicationRoot + "/purchases/", new Purchase
 				                                                                                        {
 					                                                                                        BasketId = _basket.Id,
 					                                                                                        CardToken = _card.Token,
@@ -93,19 +93,19 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 
 		private void And_the_most_recent_card_transaction_is_retrieved()
 		{
-			var cardTransactions = WebRequester.DoRequest<IEnumerable<CardTransaction>>(ApplicationRoot + "/stub/payment-provider/cards/" + _card.Token + "/transactions/", "GET").Body;
+			var cardTransactions = WebRequester.Get<IEnumerable<CardTransaction>>(ApplicationRoot + "/stub/payment-provider/cards/" + _card.Token + "/transactions/").Body;
 			_cardTransaction = cardTransactions.LastOrDefault();
 		}
 
 		private void And_the_most_recent_email_is_retrieved()
 		{
-			var response = WebRequester.DoRequest<IEnumerable<Email>>(ApplicationRoot + "/stub/email-sender/emails/", "GET");
+			var response = WebRequester.Get<IEnumerable<Email>>(ApplicationRoot + "/stub/email-sender/emails/");
 			_email = response.Body.LastOrDefault();
 		}
 
 		private void And_the_users_folio_is_retrieved()
 		{
-			var response = WebRequester.DoRequest<IEnumerable<FolioItem>>(ApplicationRoot + "/users/" + _user.Id + "/folio/", "GET");
+			var response = WebRequester.Get<IEnumerable<FolioItem>>(ApplicationRoot + "/users/" + _user.Id + "/folio/");
 			_folio = response.Body;
 		}
 
@@ -209,7 +209,7 @@ Items purchased:
 		[Test]
 		public void Then_the_basket_can_no_longer_be_retrieved()
 		{
-			var response = WebRequester.DoRequest<Basket>(_basketUrl, "GET");
+			var response = WebRequester.Get<Basket>(_basketUrl);
 			Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 		}
 	}

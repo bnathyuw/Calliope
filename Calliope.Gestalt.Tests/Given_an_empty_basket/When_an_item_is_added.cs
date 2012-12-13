@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Net;
 using Calliope.Gestalt.Tests.Model;
-using Calliope.Gestalt.Tests.Web;
+using Calliope.WebSupport;
 using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests.Given_an_empty_basket
@@ -12,7 +12,7 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 	{
 		private const string ApplicationRoot = "http://localhost/calliope";
 		private Item _item;
-		private TestWebResponse<Item> _response;
+		private ApiResponse<Item> _response;
 		private string _itemLocation;
 		private string _basketUrl;
 		private IEnumerable<Poem> _poems;
@@ -21,14 +21,14 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
 		{
-			var postBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
+			var postBasketResponse = WebRequester.Post(ApplicationRoot + "/baskets/", new Basket());
 
 			_basketUrl = postBasketResponse["Location"];
 
-			_poems = WebRequester.DoRequest<IEnumerable<Poem>>(ApplicationRoot + "/poems/", "GET").Body;
+			_poems = WebRequester.Get<IEnumerable<Poem>>(ApplicationRoot + "/poems/").Body;
 			_poem = _poems.ElementAt(2);
 
-			_response = WebRequester.DoRequest(_basketUrl + "items/", "POST", new Item {Id = _poem.Id});
+			_response = WebRequester.Post(_basketUrl + "items/", new Item {Id = _poem.Id});
 
 			_item = _response.Body;
 			_itemLocation = _response["Location"];

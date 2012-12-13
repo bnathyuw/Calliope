@@ -1,5 +1,5 @@
 ﻿using Calliope.Gestalt.Tests.Model;
-using Calliope.Gestalt.Tests.Web;
+using Calliope.WebSupport;
 using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests.Given_an_empty_basket
@@ -16,11 +16,11 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			var firstBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
+			var firstBasketResponse = WebRequester.Post(ApplicationRoot + "/baskets/", new Basket());
 			_firstBasket = firstBasketResponse.Body;
 			_firstBasketUrl = firstBasketResponse["Location"];
 
-			var secondBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
+			var secondBasketResponse = WebRequester.Post(ApplicationRoot + "/baskets/", new Basket());
 			_secondBasket = secondBasketResponse.Body;
 			_secondBasketUrl = secondBasketResponse["Location"];
 		}

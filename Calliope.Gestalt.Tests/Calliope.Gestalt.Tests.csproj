@@ -58,12 +58,19 @@
     <Compile Include="Given_an_empty_basket\When_the_basket_is_retrieved.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web\TestWebResponse.cs" />
-    <Compile Include="Web\WebRequester.cs" />
     <Compile Include="When_a_new_basket_is_created.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calliope.WebSupport\Calliope.WebSupport.csproj">
+      <Project>{7d56315a-d6ac-4fa9-aba0-905c45f4b050}</Project>
+      <Name>Calliope.WebSupport</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Web\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

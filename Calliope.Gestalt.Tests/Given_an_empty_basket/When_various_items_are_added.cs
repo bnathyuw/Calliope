@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Calliope.Gestalt.Tests.Model;
-using Calliope.Gestalt.Tests.Web;
+using Calliope.WebSupport;
 using NUnit.Framework;
 
 namespace Calliope.Gestalt.Tests.Given_an_empty_basket
@@ -16,11 +16,11 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 		[SetUp]
 		public void TestFixtureSetUp()
 		{
-			var postBasketResponse = WebRequester.DoRequest<Basket>(ApplicationRoot + "/baskets/", "POST");
+			var postBasketResponse = WebRequester.Post(ApplicationRoot + "/baskets/", new Basket());
 
 			_basketUrl = postBasketResponse["Location"];
 
-			_poems = WebRequester.DoRequest<IEnumerable<Poem>>(ApplicationRoot + "/poems/", "GET").Body;
+			_poems = WebRequester.Get<IEnumerable<Poem>>(ApplicationRoot + "/poems/").Body;
 		}
 
 		[TestCase(0,1)]
@@ -31,11 +31,11 @@ namespace Calliope.Gestalt.Tests.Given_an_empty_basket
 			var expectedTotal = 0;
 			foreach (var poem in poemIndices.Select(poemIndex => _poems.ElementAt(poemIndex)))
 			{
-				WebRequester.DoRequest(_basketUrl + "items/", "POST", new Item { Id = poem.Id });
+				WebRequester.Post(_basketUrl + "items/", new Item { Id = poem.Id });
 				expectedTotal += poem.Price;
 			}
 
-			var response = WebRequester.DoRequest<Basket>(_basketUrl, "GET");
+			var response = WebRequester.Get<Basket>(_basketUrl);
 			var basket = response.Body;
 			Assert.That(basket.Total, Is.EqualTo(expectedTotal));
 		}

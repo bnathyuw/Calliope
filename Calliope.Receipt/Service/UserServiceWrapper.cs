@@ -8,7 +8,7 @@ namespace Calliope.Receipt.Service
 		public static User GetUser(int id)
 		{
 			var url = "http://localhost/calliope/users/" + id + "/";
-			return WebRequester.Get<User>(url);
+			return WebRequester.Get<User>(url).Body;
 		}
 	}
 }
