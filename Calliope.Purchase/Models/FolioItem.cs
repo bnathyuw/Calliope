@@ -7,5 +7,7 @@
 		public string Poet { get; set; }
 
 		public string FirstLine { get; set; }
+
+		public int PoemId { get; set; }
 	}
 }

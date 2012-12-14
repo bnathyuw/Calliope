@@ -10,6 +10,7 @@ namespace Calliope.Purchase.Services
 			var url = "http://localhost/calliope/users/" + userId + "/folio/";
 			var folioItem = new FolioItem
 				                {
+									PoemId = item.Id,
 					                Title = item.Title,
 					                Poet = item.Poet,
 					                FirstLine = item.FirstLine

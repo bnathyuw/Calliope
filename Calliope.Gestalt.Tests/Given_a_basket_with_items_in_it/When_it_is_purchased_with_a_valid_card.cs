@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -49,63 +50,63 @@ namespace Calliope.Gestalt.Tests.Given_a_basket_with_items_in_it
 
 		private void Given_a_basket()
 		{
-			var postBasketResponse = WebRequester.Post(ApplicationRoot + "/baskets/", new Basket());
+			var postBasketResponse = WebRequester.Post(ApplicationRoot + "/baskets/", new Basket(), Console.WriteLine);
 			_basket = postBasketResponse.Body;
 			_basketUrl = postBasketResponse["Location"];
 		}
 
 		private void And_a_user()
 		{
-			var response = WebRequester.Post(ApplicationRoot + "/users/", new User {Email = UserEmail});
+			var response = WebRequester.Post(ApplicationRoot + "/users/", new User { Email = UserEmail }, Console.WriteLine);
 			_user = response.Body;
 		}
 
 		private void And_various_poems()
 		{
-			_poems = WebRequester.Get<IEnumerable<Poem>>(ApplicationRoot + "/poems/").Body.Take(3).ToArray();
+			_poems = WebRequester.Get<IEnumerable<Poem>>(ApplicationRoot + "/poems/", Console.WriteLine).Body.Take(3).ToArray();
 		}
 
 		private void And_three_items_in_the_basket()
 		{
 			foreach (var poem in _poems)
 			{
-				WebRequester.Post(_basketUrl + "items/", new Item { Id = poem.Id });
+				WebRequester.Post(_basketUrl + "items/", new Item { Id = poem.Id }, Console.WriteLine);
 				_amount += poem.Price;
 			}
 		}
 
 		private void And_a_card()
 		{
-			var response = WebRequester.Post(ApplicationRoot + "/stub/payment-provider/cards/", new Card { Number = "5454545454545454", ExpiryDate = "2020/10" });
+			var response = WebRequester.Post(ApplicationRoot + "/stub/payment-provider/cards/", new Card { Number = "5454545454545454", ExpiryDate = "2020/10" }, Console.WriteLine);
 			_card = response.Body;
 		}
 
 		private void When_the_basket_is_purchased()
 		{
 			_postPurchaseResponse = WebRequester.Post(ApplicationRoot + "/purchases/", new Purchase
-				                                                                                        {
-					                                                                                        BasketId = _basket.Id,
-					                                                                                        CardToken = _card.Token,
-					                                                                                        UserId = _user.Id
-				                                                                                        });
+				                                                                           {
+					                                                                           BasketId = _basket.Id,
+					                                                                           CardToken = _card.Token,
+					                                                                           UserId = _user.Id
+				                                                                           }, Console.WriteLine);
 			_purchase = _postPurchaseResponse.Body;
 		}
 
 		private void And_the_most_recent_card_transaction_is_retrieved()
 		{
-			var cardTransactions = WebRequester.Get<IEnumerable<CardTransaction>>(ApplicationRoot + "/stub/payment-provider/cards/" + _card.Token + "/transactions/").Body;
+			var cardTransactions = WebRequester.Get<IEnumerable<CardTransaction>>(ApplicationRoot + "/stub/payment-provider/cards/" + _card.Token + "/transactions/", Console.WriteLine).Body;
 			_cardTransaction = cardTransactions.LastOrDefault();
 		}
 
 		private void And_the_most_recent_email_is_retrieved()
 		{
-			var response = WebRequester.Get<IEnumerable<Email>>(ApplicationRoot + "/stub/email-sender/emails/");
+			var response = WebRequester.Get<IEnumerable<Email>>(ApplicationRoot + "/stub/email-sender/emails/", Console.WriteLine);
 			_email = response.Body.LastOrDefault();
 		}
 
 		private void And_the_users_folio_is_retrieved()
 		{
-			var response = WebRequester.Get<IEnumerable<FolioItem>>(ApplicationRoot + "/users/" + _user.Id + "/folio/");
+			var response = WebRequester.Get<IEnumerable<FolioItem>>(ApplicationRoot + "/users/" + _user.Id + "/folio/", Console.WriteLine);
 			_folio = response.Body;
 		}
 
