@@ -14,7 +14,7 @@ namespace Calliope.Basket.Modules
 				                             {
 					                             var basketId = (int) o.basketid;
 					                             var item = CreateItem(this.Bind<Item>(), basketId);
-					                             return Negotiate.WithHeader("Location", this.GetItemUrl(basketId, item.Id))
+					                             return Negotiate.WithHeader("Location", this.GetUrl(item))
 					                                             .WithStatusCode(HttpStatusCode.Created)
 					                                             .WithModel(item);
 				                             };
