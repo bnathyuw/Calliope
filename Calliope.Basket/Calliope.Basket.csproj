@@ -69,16 +69,16 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Basket.cs" />
-    <Compile Include="BasketModule.cs" />
-    <Compile Include="BasketStore.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="ItemModule.cs" />
-    <Compile Include="ItemStore.cs" />
-    <Compile Include="Poem.cs" />
-    <Compile Include="PoemServiceWrapper.cs" />
+    <Compile Include="Models\Basket.cs" />
+    <Compile Include="Modules\BasketModule.cs" />
+    <Compile Include="Stores\BasketStore.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Modules\ItemModule.cs" />
+    <Compile Include="Stores\ItemStore.cs" />
+    <Compile Include="Models\Poem.cs" />
+    <Compile Include="Services\PoemServiceWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UrlExtensions.cs" />
+    <Compile Include="Modules\UrlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -95,6 +95,7 @@
       <Name>Calliope.WebSupport</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

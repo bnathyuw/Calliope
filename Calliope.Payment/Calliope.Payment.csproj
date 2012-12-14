@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\CardTransaction.cs" />
-    <Compile Include="PaymentModule.cs" />
+    <Compile Include="Modules\PaymentModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Payment.cs" />
     <Compile Include="Service\PaymentProviderWrapper.cs" />

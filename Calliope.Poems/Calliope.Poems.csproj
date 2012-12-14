@@ -66,9 +66,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Poem.cs" />
-    <Compile Include="PoemModule.cs" />
-    <Compile Include="PoemStore.cs" />
+    <Compile Include="Models\Poem.cs" />
+    <Compile Include="Modules\PoemModule.cs" />
+    <Compile Include="Stores\PoemStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
